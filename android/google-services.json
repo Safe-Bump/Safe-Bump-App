@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "196643596181",
+    "project_id": "safe-bump",
+    "storage_bucket": "safe-bump.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196643596181:android:bb589c2ac74326840ab89c",
+        "android_client_info": {
+          "package_name": "com.example.safe_bump"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196643596181-mfbjnt8m8u82mnep2md60qq6fkieicdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.safe_bump",
+            "certificate_hash": "c07ef7264c95272157949f1a8244c716f37ca67f"
+          }
+        },
+        {
+          "client_id": "196643596181-98ar3ves1rmn49843456bnitcqp9s4at.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_4Bj_XLJvkxhji4UiAIjviAMGRKG8MKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196643596181-98ar3ves1rmn49843456bnitcqp9s4at.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
