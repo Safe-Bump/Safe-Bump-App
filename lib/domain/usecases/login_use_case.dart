@@ -17,4 +17,9 @@ class LoginUseCase {
     final userCredential = await _loginRepository.googleLogin();
     return userCredential;
   }
+
+  Future<UserCredential?> signUp(UserModel? user) async {
+    final userCredential = await _loginRepository.login(user?.email,user?.password);
+    return userCredential;
+  }
 }

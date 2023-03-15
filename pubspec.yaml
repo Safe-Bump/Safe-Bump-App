@@ -26,6 +26,9 @@ dependencies:
   sizer: ^2.0.15
   flutter_svg: ^2.0.2
   smooth_page_indicator: ^1.0.1
+  cloud_firestore: ^4.4.4
+  table_calendar: ^3.0.8
+  intl: ^0.17.0
 dev_dependencies:
   injectable_generator: ^2.1.0
   flutter_test:
@@ -47,4 +50,5 @@ flutter:
     - assets/images/logo.png
     - assets/images/google_icon.png
     - assets/svg/onboarding/
+    - assets/svg/dashboard/
 

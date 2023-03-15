@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType inputType;
   final ValueChanged<String>? onChanged;
+  final Widget? suffixIcon;
 
   const CustomTextField(
       {super.key,
@@ -13,7 +14,8 @@ class CustomTextField extends StatelessWidget {
       required this.hint,
       this.obscureText = false,
       this.inputType = TextInputType.text,
-      this.onChanged});
+      this.onChanged,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         hintText: hint,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

@@ -6,10 +6,10 @@ import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_use_case.dart';
 
 @injectable
-class LoginViewModel extends ChangeNotifier {
+class AuthViewModel extends ChangeNotifier {
   final LoginUseCase _loginUseCase;
 
-  LoginViewModel(this._loginUseCase);
+  AuthViewModel(this._loginUseCase);
 
   UserModel? _user;
 
@@ -38,6 +38,16 @@ class LoginViewModel extends ChangeNotifier {
     setLoading(true);
 
     final result = await _loginUseCase.googleLogin();
+
+    setLoading(false);
+
+    return result;
+  }
+
+  Future<UserCredential?> signUp() async {
+    setLoading(true);
+
+    final result = await _loginUseCase.signUp(user);
 
     setLoading(false);
 

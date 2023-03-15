@@ -30,7 +30,7 @@ class FirebaseAuthRepository implements LoginRepository {
 
   @override
   Future<UserCredential?> googleLogin() async {
-    try{
+    try {
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser!.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -49,5 +49,21 @@ class FirebaseAuthRepository implements LoginRepository {
     }
   }
 
-
+  @override
+  Future<UserCredential?> signUp(String? email, String? password) async {
+    try {
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email!,
+        password: password!,
+      );
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
+      return null;
+    }
+  }
 }

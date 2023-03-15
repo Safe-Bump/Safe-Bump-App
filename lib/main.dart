@@ -5,10 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/injection.dart';
 import 'package:safe_bump/presentation/screen/login_screen.dart';
-import 'package:safe_bump/router.dart';
+import 'package:safe_bump/navigation/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'firebase_options.dart';
+
 bool? isViewed;
 
 Future<void> main() async {
@@ -30,29 +31,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     return Sizer(
-        builder: (context, orientation, deviceType) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      initialRoute: '/onboarding',
-
-      // initialRoute: isViewed==null ? '/onboarding' : '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
-      theme: ThemeData(
-          primarySwatch: Colors.pink,
-          textTheme: TextTheme(
-            headlineLarge: const TextStyle(
-                fontFamily: 'ProductSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 30),
-            headlineMedium:
-            const TextStyle(fontFamily: 'ProductSans', fontSize: 24),
-            bodyLarge: const TextStyle(fontFamily: 'ProductSans', fontSize: 14),
-            bodyMedium:
-            const TextStyle(fontFamily: 'ProductSans', fontSize: 12),
-            bodySmall: GoogleFonts.inter(),
-          )),
-
-    );},);
-
+      builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          title: 'Safe Bump',
+          initialRoute: NavigationRoutes.mainScreen,
+          // initialRoute: isViewed==null ? '/onboarding' : '/',
+          onGenerateRoute: RouteGenerator.generateRoute,
+          theme: ThemeData(
+              primarySwatch: Colors.pink,
+              scaffoldBackgroundColor: Colors.grey.shade50,
+              textTheme: TextTheme(
+                headlineLarge: TextStyle(
+                    fontFamily: 'ProductSans',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26.sp),
+                headlineMedium:
+                    TextStyle(fontFamily: 'ProductSans', fontSize: 20.sp),
+                bodyLarge:
+                    TextStyle(fontFamily: 'ProductSans', fontSize: 12.sp),
+                bodyMedium:
+                    TextStyle(fontFamily: 'ProductSans', fontSize: 10.sp),
+                bodySmall: GoogleFonts.inter(),
+              )),
+        );
+      },
+    );
   }
 }
