@@ -235,12 +235,30 @@ class _DashboardViewState extends State<DashboardView> {
                     mainAxisSpacing: 10,
                   ),
                   children: [
-                    DashboardCard(),
-                    DashboardCard(),
-                    DashboardCard(),
-                    DashboardCard(),
-                    DashboardCard(),
-                    DashboardCard(),
+                    DashboardCard(
+                      icon: Icons.medical_information,
+                      name: "Medicine",
+                    ),
+                    DashboardCard(
+                      icon: Icons.local_hospital,
+                      name: "Hospitals",
+                    ),
+                    DashboardCard(
+                      icon: Icons.fitness_center,
+                      name: "Exercises",
+                    ),
+                    DashboardCard(
+                      icon: Icons.article,
+                      name: "Articles",
+                    ),
+                    DashboardCard(
+                      icon: Icons.video_collection,
+                      name: "Videos",
+                    ),
+                    DashboardCard(
+                      icon: Icons.food_bank,
+                      name: "Food",
+                    )
                   ],
                 ),
               )

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class DashboardCard extends StatelessWidget {
-  const DashboardCard({Key? key}) : super(key: key);
+  final IconData icon;
+  final String name;
+
+  const DashboardCard({Key? key, required this.icon, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,14 @@ class DashboardCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.medical_information,
+            icon,
             color: Colors.pinkAccent,
           ),
           SizedBox(
             height: 1.h,
           ),
           Text(
-            "Medicines",
+            name,
             style: Theme.of(context).textTheme.bodyLarge,
           )
         ],
