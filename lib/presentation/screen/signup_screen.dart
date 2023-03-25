@@ -15,7 +15,7 @@ class SignUpScreen extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => GetIt.I<AuthViewModel>()),
       ChangeNotifierProvider<UserModel>(
-        create: (_) => UserModel(),
+        create: (_) => UserModel(name: '',email: '',password: ''),
       )
     ], child: const SignUpView());
   }

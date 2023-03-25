@@ -4,11 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_bump/presentation/viewmodel/dashboard_viewmodel.dart';
 import 'package:safe_bump/presentation/widgets/dashboard_card.dart';
 import 'package:safe_bump/presentation/widgets/safe_bump_app_bar.dart';
 import 'package:safe_bump/utils/asset_helper.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../../domain/entities/User.dart';
+import '../viewmodel/auth_viewmodel.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -21,8 +26,19 @@ class _DashboardViewState extends State<DashboardView> {
   DateTime date = DateTime.now();
 
   @override
+  void initState() {
+    super.initState();
+    // final dashBoardViewModel =
+    //     Provider.of<DashboardViewModel>(context, listen: false);
+
+    // dashBoardViewModel.getUserDetail();
+    // dashBoardViewModel.getPregnancyDetails();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
+    // var dashboardViewModel=Provider.of<DashboardViewModel>(context);
     return Scaffold(
       appBar: SafeBumpAppBar(
         trailingWidget: CircleAvatar(
@@ -45,6 +61,13 @@ class _DashboardViewState extends State<DashboardView> {
                     ?.copyWith(color: Colors.grey),
               ),
               SizedBox(
+                height: 1.h,
+              ),
+              Text(
+                "${(DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((1)! * (24 * 60 * 60 * 1000))).inDays)/7}th Week of Pregnancy",
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              SizedBox(
                 height: 2.h,
               ),
               TableCalendar(
@@ -58,60 +81,60 @@ class _DashboardViewState extends State<DashboardView> {
                 rowHeight: 80,
                 calendarBuilders: CalendarBuilders(
                     defaultBuilder: (context, day, focusedDay) => Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Container(
-                              padding: EdgeInsets.all(10),
-                              height: 40.h,
-                              width: 20.w,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(DateFormat('EEE').format(day),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                  Text(
-                                    day.day.toString(),
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                ],
+                      padding: const EdgeInsets.all(3.0),
+                      child: Container(
+                          padding: EdgeInsets.all(10),
+                          height: 40.h,
+                          width: 20.w,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(DateFormat('EEE').format(day),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall),
+                              Text(
+                                day.day.toString(),
+                                style:
+                                Theme.of(context).textTheme.bodyLarge,
                               ),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)))),
-                        ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10)))),
+                    ),
                     todayBuilder: (context, day, focusedDay) => Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Container(
-                              padding: EdgeInsets.all(10),
-                              height: 40.h,
-                              width: 20.w,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    DateFormat('EEE').format(day),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(color: Colors.white),
-                                  ),
-                                  Text(
-                                    day.day.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(color: Colors.white),
-                                  ),
-                                ],
+                      padding: const EdgeInsets.all(3.0),
+                      child: Container(
+                          padding: EdgeInsets.all(10),
+                          height: 40.h,
+                          width: 20.w,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                DateFormat('EEE').format(day),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: Colors.white),
                               ),
-                              decoration: BoxDecoration(
-                                  color: Colors.pinkAccent,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)))),
-                        )),
+                              Text(
+                                day.day.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.pinkAccent,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10)))),
+                    )),
               ),
               SizedBox(
                 height: 2.h,
@@ -126,7 +149,8 @@ class _DashboardViewState extends State<DashboardView> {
                             padding: EdgeInsets.all(15),
                             width: 70,
                             height: 70,
-                            child: SvgPicture.asset(AssetsHelper.maternalImage),
+                            child:
+                            SvgPicture.asset(AssetsHelper.maternalImage),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.red.shade100,

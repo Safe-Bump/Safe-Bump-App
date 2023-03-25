@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/login_repository.dart';
 
+@injectable
 class FirebaseAuthRepository implements LoginRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;

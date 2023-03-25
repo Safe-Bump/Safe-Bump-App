@@ -49,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
                 CustomTextField(
                   controller: _emailController,
                   hint: "Enter Email",
-                  onChanged: (value) => userModel.setEmail(value),
+                  onChanged: (value) => {},
                   suffixIcon: const Icon(Icons.email_outlined),
                 ),
                 const SizedBox(
@@ -64,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                   controller: _passwordController,
                   hint: "Enter Password",
                   obscureText: _obscureText,
-                  onChanged: (value) => userModel.setPassword(value),
+                  onChanged: (value) => {},
                   suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {

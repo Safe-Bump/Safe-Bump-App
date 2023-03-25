@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 import 'package:safe_bump/domain/entities/user.dart';
 
 import '../../data/repositories/login_repository.dart';
 
+@injectable
 class LoginUseCase {
   final LoginRepository _loginRepository;
 
