@@ -63,7 +63,7 @@ class _SafeBumpScreenState extends State<SafeBumpScreen> {
           children: [
             const DashboardScreen(),
             const CalendarScreen(),
-             TimelineScreen(),
+            TimelineScreen(),
             const ProfileScreen()
           ],
           index: pageIndex,
