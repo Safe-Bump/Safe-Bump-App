@@ -8,5 +8,6 @@ class AssetsHelper {
 
   static const String maternalImage = 'assets/svg/dashboard/Maternal.svg';
   static const String timelineIndicator = 'assets/svg/timeline/timeline.svg';
+  static const String seedSvg = 'assets/svg/suggested_food/seeds.svg';
 
 }

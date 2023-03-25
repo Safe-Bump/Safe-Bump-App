@@ -54,4 +54,5 @@ flutter:
     - assets/svg/onboarding/
     - assets/svg/dashboard/
     - assets/svg/timeline/
+    - assets/svg/suggested_food/
 
