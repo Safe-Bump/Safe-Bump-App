@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import '../view/timeline_view.dart';
+
 class TimelineScreen extends StatefulWidget {
   const TimelineScreen({Key? key}) : super(key: key);
 
@@ -10,7 +12,7 @@ class TimelineScreen extends StatefulWidget {
 class _TimelineScreenState extends State<TimelineScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return TimelineView();
   }
 }
 

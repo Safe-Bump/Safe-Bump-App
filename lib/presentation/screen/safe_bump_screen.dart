@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/screen/calendar_screen.dart';
 import 'package:safe_bump/presentation/screen/dashboard_screen.dart';
 import 'package:safe_bump/presentation/screen/profile_screen.dart';
+import 'package:safe_bump/presentation/screen/timeline_screen.dart';
 
 class SafeBumpScreen extends StatefulWidget {
   const SafeBumpScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class _SafeBumpScreenState extends State<SafeBumpScreen> {
           children: [
             const DashboardScreen(),
             const CalendarScreen(),
-            const Placeholder(),
+             TimelineScreen(),
             const ProfileScreen()
           ],
           index: pageIndex,

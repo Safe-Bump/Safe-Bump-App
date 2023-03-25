@@ -7,4 +7,6 @@ class AssetsHelper {
   static const String onboardingImage4 = 'assets/svg/onboarding/screen4.svg';
 
   static const String maternalImage = 'assets/svg/dashboard/Maternal.svg';
+  static const String timelineIndicator = 'assets/svg/timeline/timeline.svg';
+
 }

@@ -53,4 +53,5 @@ flutter:
     - assets/images/google_icon.png
     - assets/svg/onboarding/
     - assets/svg/dashboard/
+    - assets/svg/timeline/
 
