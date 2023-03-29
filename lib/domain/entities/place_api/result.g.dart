@@ -27,6 +27,7 @@ Result _$ResultFromJson(Map<String, dynamic> json) => Result(
           ? null
           : PlusCode.fromJson(json['plusCode'] as Map<String, dynamic>),
       (json['rating'] as num?)?.toDouble(),
+      json['url'] as String?,
       json['reference'] as String?,
       json['scope'] as String?,
       (json['types'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -58,5 +59,6 @@ Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'formatted_address': instance.formatted_address,
       'formatted_phone_number': instance.formatted_phone_number,
       'address_components': instance.address_components,
+      'url': instance.url,
       'adr_address': instance.adr_address,
     };

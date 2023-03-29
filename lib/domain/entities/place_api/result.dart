@@ -28,6 +28,7 @@ class Result {
   final String? formatted_address;
   final String? formatted_phone_number;
   final List<AddressComponent>? address_components;
+  final String? url;
   final String? adr_address;
 
   factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
@@ -46,6 +47,7 @@ class Result {
       this.placeId,
       this.plusCode,
       this.rating,
+      this.url,
       this.reference,
       this.scope,
       this.types,
