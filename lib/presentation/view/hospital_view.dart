@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_bump/presentation/viewmodel/hospital_viewmodel.dart';
 import 'package:safe_bump/presentation/widgets/custom_text_field.dart';
 import 'package:safe_bump/presentation/widgets/safe_bump_app_bar.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +19,7 @@ class HospitalView extends StatefulWidget {
 }
 
 class _HospitalViewState extends State<HospitalView> {
-  GoogleMapController? _controller;
+  Completer<GoogleMapController> _controller = Completer();
   Position? _currentPosition;
   LatLng _center = LatLng(45.521563, -122.677433);
   Set<Marker> _markers = {};
@@ -28,143 +30,155 @@ class _HospitalViewState extends State<HospitalView> {
     zoom: 14.4746,
   );
 
-  _getCurrentLocation() async {
-    try {
-      await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      ).then((value) {
-        setState(() {
-          _currentPosition = value;
-          _center = LatLng(value.latitude, value.longitude);
-          _markers.add(Marker(markerId: MarkerId("value"), position: _center));
-        });
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _goToCurrentLocation() async {
-    await _controller?.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-        target: LatLng(currentPosition?.latitude as double,
-            currentPosition?.longitude as double),
-        zoom: 15,
-      ),
-    ));
+  Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+    });
+    return await Geolocator.getCurrentPosition();
   }
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: SafeBumpAppBar(
-        // leadingWidget: Icon(Icons.menu_rounded),
-          trailingWidget: Icon(Icons.more_vert), title: "Hospitals"),
-      body: GoogleMap(
-        mapType: MapType.terrain,
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 15.0,
+    return Consumer<HospitalViewModel>(
+      builder: (context, hospitalViewModel, child) => Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: SafeBumpAppBar(
+            // leadingWidget: Icon(Icons.menu_rounded),
+            trailingWidget: Icon(Icons.more_vert),
+            title: "Hospitals"),
+        body: GoogleMap(
+          mapType: MapType.terrain,
+          initialCameraPosition: _kGooglePlex,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+          zoomControlsEnabled: false,
+          myLocationButtonEnabled: false,
+          markers: _markers,
+          myLocationEnabled: true,
+          mapToolbarEnabled: false,
         ),
-        onMapCreated: (GoogleMapController controller) {
-          _controller = controller;
-        },
-        markers: _markers,
-        myLocationButtonEnabled: true,
-        myLocationEnabled: true,
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.search),
-          onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10))),
-                builder: (context) => Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Your Location",
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    _goToCurrentLocation();
-                                  },
-                                  icon: Icon(Icons.location_searching))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          CustomTextField(
-                              controller: TextEditingController(),
-                              hint: "Search Hospitals"),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                                itemCount: 4,
-                                itemBuilder: (context, index) {
-                                  return Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Row(
-                                        children: [
-                                          Placeholder(
-                                            fallbackWidth: 50,
-                                            fallbackHeight: 50,
-                                          ),
-                                          SizedBox(
-                                            width: 2.w,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Hospital Name",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge,
-                                              ),
-                                              Text(
-                                                "Location",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              )
-                                            ],
-                                          )
-                                        ],
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.search),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10))),
+                  builder: (context) => Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Your Location",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      getUserCurrentLocation()
+                                          .then((value) async {
+                                        var cameraPosition = new CameraPosition(
+                                            target: LatLng(value.latitude,
+                                                value.longitude),
+                                            zoom: 14);
+
+                                        _markers.add(Marker(
+                                            markerId: MarkerId('Home'),
+                                            position: LatLng(value.latitude,
+                                                value.longitude)));
+                                        final GoogleMapController controller =
+                                            await _controller.future;
+                                        controller.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                                cameraPosition));
+                                        hospitalViewModel.getHospitalList(
+                                            LatLng(value.latitude,
+                                                value.longitude));
+                                        setState(() {});
+                                      });
+                                    },
+                                    icon: Icon(Icons.location_searching))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            CustomTextField(
+                                controller: TextEditingController(),
+                                hint: "Search Hospitals"),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: hospitalViewModel.hospital == null
+                                      ? 0
+                                      : hospitalViewModel
+                                          .hospital?.results.length,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Row(
+                                          children: [
+                                            Placeholder(
+                                              fallbackWidth: 50,
+                                              fallbackHeight: 50,
+                                            ),
+                                            SizedBox(
+                                              width: 2.w,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  (hospitalViewModel.hospital
+                                                          ?.results[index].name)
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge,
+                                                ),
+                                                Text(
+                                                  (hospitalViewModel
+                                                          .hospital
+                                                          ?.results[index].adr_address)
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
-                          )
-                        ],
-                      ),
-                    ));
-          }),
+                                    );
+                                  }),
+                            )
+                          ],
+                        ),
+                      ));
+            }),
+      ),
     );
   }
 }

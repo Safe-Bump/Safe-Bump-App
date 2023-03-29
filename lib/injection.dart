@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -6,20 +7,24 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/data/repositories/calendar_repository.dart';
 import 'package:safe_bump/data/repositories/dashboard_repository.dart';
+import 'package:safe_bump/data/repositories/hospital_repository.dart';
 import 'package:safe_bump/data/repositories/profile_repository.dart';
 import 'package:safe_bump/domain/entities/user_model.dart';
 import 'package:safe_bump/domain/entities/user_model.dart';
 import 'package:safe_bump/domain/repositories/calendar_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/dashboard_repository_impl.dart';
+import 'package:safe_bump/domain/repositories/hospital_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/profile_repository_impl.dart';
 import 'package:safe_bump/domain/usecases/calendar_use_case.dart';
 import 'package:safe_bump/domain/usecases/dashboard_use_case.dart';
+import 'package:safe_bump/domain/usecases/hospital_use_case.dart';
 import 'package:safe_bump/domain/usecases/login_use_case.dart';
 import 'package:safe_bump/domain/usecases/profile_use_case.dart';
 import 'package:safe_bump/injection.config.dart';
 import 'package:safe_bump/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/calendar_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/dashboard_viewmodel.dart';
+import 'package:safe_bump/presentation/viewmodel/hospital_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/profile_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/timeline_viewmodel.dart';
 
@@ -117,20 +122,38 @@ void configureTimelineModuleInjection() {
 }
 
 @module
-void configureFirebaseModuleInjection() {
+void configureHospitalModuleInjection() {
+  final dio = locator<Dio>();
+  locator.registerLazySingleton<HospitalRepository>(
+      () => HospitalRepositoryImpl(dio));
+
+  if (!locator.isRegistered<HospitalUseCase>())
+    locator.registerLazySingleton<HospitalUseCase>(
+        () => HospitalUseCase(locator<HospitalRepository>()));
+
+  if (!locator.isRegistered<HospitalViewModel>()) {
+    locator.registerFactory<HospitalViewModel>(
+        () => HospitalViewModel(locator<HospitalUseCase>()));
+  }
+}
+
+@module
+void configureServicesModuleInjection() {
   locator.registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance);
   locator.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  locator.registerLazySingleton<Dio>(() => Dio());
   locator.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn());
 }
 
 @InjectableInit()
 void configureInjection(String environment) {
   locator.init(environment: environment);
-  configureFirebaseModuleInjection();
+  configureServicesModuleInjection();
   configureLoginModuleInjection();
   configureDashboardModuleInjection();
   configureProfileModuleInjection();
   configureTimelineModuleInjection();
+  configureHospitalModuleInjection();
   configureCalendarModuleInjection();
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_bump/presentation/screen/VideoListScreen.dart';
 import 'package:safe_bump/presentation/screen/article_list_screen.dart';
 import 'package:safe_bump/presentation/screen/article_screen.dart';
 import 'package:safe_bump/presentation/screen/dashboard_screen.dart';
@@ -25,6 +26,7 @@ abstract class NavigationRoutes {
   static const String exercise = '/exercise';
   static const String exercise_detail = '/exercise/detail';
   static const String food = '/food';
+  static const String video_list = '/video_list';
 }
 
 class RouteGenerator {
@@ -49,6 +51,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => DashboardScreen());
       case NavigationRoutes.exercise:
         return MaterialPageRoute(builder: (_) => ExerciseScreen());
+      case NavigationRoutes.video_list:
+        return MaterialPageRoute(builder: (_) => VideoListScreen());
       case NavigationRoutes.food:
         return MaterialPageRoute(builder: (_) => SuggestedFoodScreen());
       case NavigationRoutes.exercise_detail:

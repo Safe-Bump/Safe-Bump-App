@@ -64,63 +64,79 @@ class _ProfileViewState extends State<ProfileView> {
                           .add(Duration(days: 280)),
                       calendarFormat: CalendarFormat.week,
                       calendarBuilders: CalendarBuilders(
-                          todayBuilder: (context, day, focusedDay) => Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Center(
-                                      child: Text(
-                                        ((DateTime.fromMillisecondsSinceEpoch(
-                                                    day.millisecondsSinceEpoch)
-                                                .difference(DateTime
-                                                    .fromMillisecondsSinceEpoch(
-                                                        (profileViewModel
-                                                                .pregnancyDetails
-                                                                ?.startingDay)! *
-                                                            (24 *
-                                                                60 *
-                                                                60 *
-                                                                1000)))
-                                                .inDays))
-                                            .toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(color: Colors.white),
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.pinkAccent,
-                                        shape: BoxShape.circle)),
+                        todayBuilder: (context, day, focusedDay) => Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Center(
+                                child: Text(
+                                  ((DateTime.fromMillisecondsSinceEpoch(
+                                              day.millisecondsSinceEpoch)
+                                          .difference(DateTime
+                                              .fromMillisecondsSinceEpoch(
+                                                  (profileViewModel
+                                                          .pregnancyDetails
+                                                          ?.startingDay)! *
+                                                      (24 * 60 * 60 * 1000)))
+                                          .inDays))
+                                      .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(color: Colors.white),
+                                ),
                               ),
-                          defaultBuilder: (context, day, focusedDay) => Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Center(
-                                      child: Text(
-                                        (DateTime.fromMillisecondsSinceEpoch(
-                                                    day.millisecondsSinceEpoch)
-                                                .difference(DateTime
-                                                    .fromMillisecondsSinceEpoch(
-                                                        (profileViewModel
-                                                                .pregnancyDetails
-                                                                ?.startingDay)! *
-                                                            (24 *
-                                                                60 *
-                                                                60 *
-                                                                1000)))
-                                                .inDays)
-                                            .toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
-                                        shape: BoxShape.circle)),
-                              ))),
+                              decoration: BoxDecoration(
+                                  color: Colors.pinkAccent,
+                                  shape: BoxShape.circle)),
+                        ),
+                        defaultBuilder: (context, day, focusedDay) => Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Center(
+                                child: Text(
+                                  (DateTime.fromMillisecondsSinceEpoch(
+                                              day.millisecondsSinceEpoch)
+                                          .difference(DateTime
+                                              .fromMillisecondsSinceEpoch(
+                                                  (profileViewModel
+                                                          .pregnancyDetails
+                                                          ?.startingDay)! *
+                                                      (24 * 60 * 60 * 1000)))
+                                          .inDays)
+                                      .toString(),
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  shape: BoxShape.circle)),
+                        ),
+                        outsideBuilder: (context, day, focusedDay) => Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Container(
+                              padding: EdgeInsets.all(5),
+                              child: Center(
+                                child: Text(
+                                  (DateTime.fromMillisecondsSinceEpoch(
+                                              day.millisecondsSinceEpoch)
+                                          .difference(DateTime
+                                              .fromMillisecondsSinceEpoch(
+                                                  (profileViewModel
+                                                          .pregnancyDetails
+                                                          ?.startingDay)! *
+                                                      (24 * 60 * 60 * 1000)))
+                                          .inDays)
+                                      .toString(),
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  shape: BoxShape.circle)),
+                        ),
+                      )),
                   SizedBox(
                     height: 3.h,
                   ),
@@ -316,13 +332,11 @@ class SavedVideoCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
-        child: Stack(children: [
+        child: Stack(alignment: AlignmentDirectional.center, children: [
           Placeholder(),
-          Center(
-            child: Card(
-              child: Icon(Icons.play_arrow_rounded),
-              shape: CircleBorder(),
-            ),
+          Card(
+            child: Icon(Icons.play_arrow_rounded),
+            shape: CircleBorder(),
           ),
         ]),
       ),
@@ -337,7 +351,7 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, NavigationRoutes.articleList);
+        Navigator.pushNamed(context, NavigationRoutes.article);
       },
       child: Container(
         width: 70.w,

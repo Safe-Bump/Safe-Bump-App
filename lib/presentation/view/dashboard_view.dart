@@ -39,7 +39,6 @@ class _DashboardViewState extends State<DashboardView> {
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
     var selectedIndex = 0;
-    // var dashboardViewModel=Provider.of<DashboardViewModel>(context);
     return Scaffold(
       drawer: NavigationDrawer(
         backgroundColor: Colors.grey.shade50,
@@ -338,9 +337,14 @@ class _DashboardViewState extends State<DashboardView> {
                             name: "Articles",
                           ),
                         ),
-                        DashboardCard(
-                          icon: Icons.video_collection,
-                          name: "Videos",
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, NavigationRoutes.video_list);
+                          },
+                          child: DashboardCard(
+                            icon: Icons.video_collection,
+                            name: "Videos",
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {

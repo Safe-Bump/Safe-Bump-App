@@ -8,9 +8,9 @@ part of 'pregnancy_details.dart';
 
 PregnancyDetails _$PregnancyDetailsFromJson(Map<String, dynamic> json) =>
     PregnancyDetails(
-      startingDay: json['startingDay'] as int?,
-      babyHeight: (json['babyHeight'] as num?)?.toDouble(),
-      babyWeight: (json['babyWeight'] as num?)?.toDouble(),
+      json['startingDay'] as int?,
+      (json['babyHeight'] as num?)?.toDouble(),
+      (json['babyWeight'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$PregnancyDetailsToJson(PregnancyDetails instance) =>

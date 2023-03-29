@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Safe Bump',
           initialRoute: NavigationRoutes.mainScreen,
           // initialRoute: isViewed==null ? '/onboarding' : '/',

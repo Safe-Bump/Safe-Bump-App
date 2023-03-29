@@ -10,4 +10,6 @@ class AssetsHelper {
   static const String timelineIndicator = 'assets/svg/timeline/timeline.svg';
   static const String seedSvg = 'assets/svg/suggested_food/seeds.svg';
 
+  static const String place_api_base_url='https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
+  static const String place_photo_api_base_url='https://maps.googleapis.com/maps/api/place/photo?';
 }

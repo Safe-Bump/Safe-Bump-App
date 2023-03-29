@@ -10,7 +10,7 @@ class PregnancyDetails extends Equatable {
   final double? babyHeight;
   final double? babyWeight;
 
-  PregnancyDetails({this.startingDay, this.babyHeight, this.babyWeight});
+  PregnancyDetails(this.startingDay, this.babyHeight, this.babyWeight);
 
   factory PregnancyDetails.fromJson(Map<String, dynamic> json) =>
       _$PregnancyDetailsFromJson(json);
