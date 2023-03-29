@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screen/onboarding/exercise_detail_screen.dart';
+import '../screen/exercise_detail_screen.dart';
 
 class ExerciseCard extends StatelessWidget {
   final String title;

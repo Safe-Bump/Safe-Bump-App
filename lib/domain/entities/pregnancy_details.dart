@@ -1,18 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:equatable/equatable.dart';
 
+part 'pregnancy_details.g.dart';
 
-class PregnancyDetails extends ChangeNotifier {
-  int dayOfPregnancy;
-  double? height;
-  double? weight;
+@JsonSerializable()
+class PregnancyDetails extends Equatable {
+  final int? startingDay;
+  final double? babyHeight;
+  final double? babyWeight;
 
-  // int? get dayOfPregnancy => _daysOfPregnancy;
-  //
-  // double? get height => _height;
-  //
-  // double? get weight => _weight;
+  PregnancyDetails({this.startingDay, this.babyHeight, this.babyWeight});
 
-  PregnancyDetails({required this.dayOfPregnancy, this.height, this.weight});
+  factory PregnancyDetails.fromJson(Map<String, dynamic> json) =>
+      _$PregnancyDetailsFromJson(json);
 
+  Map<String, dynamic> toJson() => _$PregnancyDetailsToJson(this);
+
+  @override
+  List<Object?> get props =>
+      [this.startingDay, this.babyHeight, this.babyWeight];
 }

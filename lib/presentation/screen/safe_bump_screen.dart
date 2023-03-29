@@ -37,37 +37,39 @@ class _SafeBumpScreenState extends State<SafeBumpScreen> {
           unselectedIconTheme:
               Theme.of(context).iconTheme.copyWith(color: Colors.black),
           items: [
-            BottomNavigationBarItem(icon: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Icon(Icons.category),
-            ), label: "He"),
+            BottomNavigationBarItem(
+                icon: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Icon(Icons.dashboard_outlined),
+                ),
+                label: "He"),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.calendar_today_outlined),
-                ), label: "Hey"),
+                ),
+                label: "Hey"),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Icon(Icons.medical_services_outlined),
-                ), label: "H"),
+                  child: Icon(Icons.view_timeline_outlined),
+                ),
+                label: "H"),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.person_outline_rounded),
-                ), label: "Hi"),
+                ),
+                label: "Hi"),
           ]),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: IndexedStack(
-          children: [
-            const DashboardScreen(),
-            const CalendarScreen(),
-            TimelineScreen(),
-            const ProfileScreen()
-          ],
-          index: pageIndex,
-        ),
+      body: IndexedStack(
+        children: [
+          const DashboardScreen(),
+          const CalendarScreen(),
+          const TimelineScreen(),
+          const ProfileScreen()
+        ],
+        index: pageIndex,
       ),
     );
   }

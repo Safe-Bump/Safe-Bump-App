@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/login_repository.dart';
 
-@injectable
 class FirebaseAuthRepository implements LoginRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;

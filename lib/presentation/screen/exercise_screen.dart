@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/exercise_card.dart';
+import 'package:safe_bump/presentation/widgets/safe_bump_app_bar.dart';
+import '../widgets/exercise_card.dart';
 
 class ExerciseScreen extends StatefulWidget {
   @override
@@ -57,8 +58,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Exercise Screen"),
+      appBar: SafeBumpAppBar(
+        title: "Exercise",
+        trailingWidget: null,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -176,10 +178,13 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     }
     return exercises
         .map(
-          (exercise) => ExerciseCard(
-              title: exercise['title'],
-              description: exercise['description'],
-              image: exercise['image']),
+          (exercise) => GestureDetector(
+            onTap: (){},
+            child: ExerciseCard(
+                title: exercise['title'],
+                description: exercise['description'],
+                image: exercise['image']),
+          ),
         )
         .toList();
   }

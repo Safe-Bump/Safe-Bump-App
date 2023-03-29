@@ -29,12 +29,17 @@ dependencies:
   table_calendar: ^3.0.8
   intl: ^0.17.0
   json_annotation: ^4.8.0
+  google_maps_flutter: ^2.2.5
+  geocoding: ^2.1.0
+  geolocator: ^9.0.2
+  equatable: ^2.0.5
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
   injectable_generator: ^2.1.0
   build_runner: ^2.3.3
   json_serializable: ^6.6.1
-  flutter_test:
-    sdk: flutter
+
 
 flutter:
 

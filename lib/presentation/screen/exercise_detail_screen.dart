@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_bump/presentation/widgets/safe_bump_app_bar.dart';
 
 class ExerciseDetailPage extends StatefulWidget {
   final String title;
@@ -19,8 +20,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: SafeBumpAppBar(
+        title: widget.title,
       ),
       body: Column(
         children: [

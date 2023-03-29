@@ -2,10 +2,13 @@
     package="com.example.safe_bump">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
    <application
         android:label="safe_bump"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyBtygbeWna36e0chLf0XRZjXINgjen8zAw"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -2,17 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SafeBumpAppBar extends StatelessWidget with PreferredSizeWidget {
-  final Widget trailingWidget;
+  // final Widget leadingWidget;
+  final Widget? trailingWidget;
   final String title;
 
-  const SafeBumpAppBar({Key? key, required this.trailingWidget, required this.title})
+  const SafeBumpAppBar(
+      {
+        Key? key,
+      this.trailingWidget,
+      required this.title,
+      // required this.leadingWidget
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.grey.shade50,
-      leading: Icon(Icons.menu_rounded),
+      backgroundColor: Colors.transparent,
+      // leading: leadingWidget,
       centerTitle: true,
       title: Text(
         title,

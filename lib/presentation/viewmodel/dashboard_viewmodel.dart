@@ -1,12 +1,14 @@
+import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:safe_bump/domain/entities/pregnancy_details.dart';
 import 'package:safe_bump/domain/usecases/dashboard_use_case.dart';
 
-import '../../domain/entities/User.dart';
+import '../../domain/entities/user_model.dart';
 
-class DashboardViewModel extends ChangeNotifier{
+class DashboardViewModel extends ChangeNotifier {
   final DashboardUseCase _dashboardUseCase;
+
   DashboardViewModel(this._dashboardUseCase);
 
   UserModel? _user;
@@ -26,13 +28,13 @@ class DashboardViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<UserModel?> getUserDetail() async {
-    var userDetail=await _dashboardUseCase.getUserDetails();
-    return userDetail;
+  Future<Void?> getUserDetail() async {
+    _user = await _dashboardUseCase.getUserDetails();
+    notifyListeners();
   }
 
-  Future<PregnancyDetails?> getPregnancyDetails() async{
-    var details= await _dashboardUseCase.getPregnancyDetails();
-    return details;
+  Future<Void?> getPregnancyDetails() async {
+    _pregnancyDetails = await _dashboardUseCase.getPregnancyDetails();
+    notifyListeners();
   }
 }

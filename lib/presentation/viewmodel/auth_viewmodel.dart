@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_model.dart';
 import '../../domain/usecases/login_use_case.dart';
 
 @injectable
