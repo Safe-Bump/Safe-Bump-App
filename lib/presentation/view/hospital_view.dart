@@ -10,6 +10,7 @@ import 'package:safe_bump/presentation/viewmodel/hospital_viewmodel.dart';
 import 'package:safe_bump/presentation/widgets/custom_text_field.dart';
 import 'package:safe_bump/presentation/widgets/safe_bump_app_bar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HospitalView extends StatefulWidget {
   const HospitalView({Key? key}) : super(key: key);
@@ -29,6 +30,15 @@ class _HospitalViewState extends State<HospitalView> {
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
@@ -129,6 +139,9 @@ class _HospitalViewState extends State<HospitalView> {
                                       : hospitalViewModel
                                           .hospital?.results.length,
                                   itemBuilder: (context, index) {
+                                    print(hospitalViewModel
+                                        .hospital?.results[index]
+                                        .toJson());
                                     return Card(
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
@@ -149,25 +162,47 @@ class _HospitalViewState extends State<HospitalView> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  (hospitalViewModel.hospital
-                                                          ?.results[index].name)
-                                                      .toString(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge,
+                                                Container(
+                                                  width: 50.w,
+                                                  child: Text(
+                                                    (hospitalViewModel
+                                                            .hospital
+                                                            ?.results[index]
+                                                            .name)
+                                                        .toString(),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
-                                                Text(
-                                                  (hospitalViewModel
-                                                          .hospital
-                                                          ?.results[index].adr_address)
-                                                      .toString(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
+                                                Container(
+                                                  width: 50.w,
+                                                  child: Text(
+                                                    (hospitalViewModel
+                                                            .hospital
+                                                            ?.results[index]
+                                                            .vicinity)
+                                                        .toString(),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 )
                                               ],
-                                            )
+                                            ),
+                                            IconButton(
+                                              onPressed: () => _launchInBrowser(
+                                                Uri.parse(
+                                                    "https://maps.google.com/?q=${hospitalViewModel.hospital?.results[index].vicinity}"),
+                                              ),
+                                              icon: Icon(
+                                                  Icons.location_on_outlined),
+                                              color: Colors.pinkAccent,
+                                            ),
                                           ],
                                         ),
                                       ),
