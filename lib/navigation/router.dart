@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safe_bump/presentation/screen/VideoListScreen.dart';
+import 'package:safe_bump/presentation/screen/video_list_screen.dart';
 import 'package:safe_bump/presentation/screen/article_list_screen.dart';
 import 'package:safe_bump/presentation/screen/article_screen.dart';
 import 'package:safe_bump/presentation/screen/dashboard_screen.dart';
@@ -33,7 +33,6 @@ abstract class NavigationRoutes {
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
     switch (settings.name) {
       case NavigationRoutes.mainScreen:
         return MaterialPageRoute(builder: (_) => const SafeBumpScreen());

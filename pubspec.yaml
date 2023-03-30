@@ -57,6 +57,7 @@ flutter:
           weight: 700
 
   assets:
+    - assets/images/article/
     - assets/images/exercise/
     - assets/images/logo.png
     - assets/images/google_icon.png

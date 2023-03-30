@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../utils/asset_helper.dart';
 import '../widgets/safe_bump_app_bar.dart';
 
 class ArticleView extends StatefulWidget {
@@ -11,9 +12,15 @@ class ArticleView extends StatefulWidget {
 }
 
 class _ArticleViewState extends State<ArticleView> {
-
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)?.settings.arguments);
+    final index = int.parse(
+        ((ModalRoute.of(context)?.settings.arguments as String?) == null)
+            ? "0"
+            : ((ModalRoute.of(context)?.settings.arguments as String?)!));
+    var article = AssetsHelper.articleData[index];
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: SafeBumpAppBar(
@@ -24,8 +31,10 @@ class _ArticleViewState extends State<ArticleView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Placeholder(
-              fallbackHeight: 40.h,
+            Image.asset(
+              article["image"],
+              height: 30.h,
+              fit: BoxFit.cover,
             ),
             Container(
               child: Padding(
@@ -37,7 +46,7 @@ class _ArticleViewState extends State<ArticleView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Yoga",
+                            article["title"],
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium
@@ -49,7 +58,7 @@ class _ArticleViewState extends State<ArticleView> {
                       SizedBox(
                         height: 1.h,
                       ),
-                      Text("data",
+                      Text(article["detail"],
                           style: Theme.of(context).textTheme.bodyMedium),
                     ]),
               ),

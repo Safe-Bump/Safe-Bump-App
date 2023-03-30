@@ -8,7 +8,7 @@ class RiskDetectorUseCase {
   RiskDetectorUseCase(this._riskDetectorRepository);
 
   Future<String> fetchRiskData(int age, int systolicBP, int diastolicBP,
-      double bs, int bodyTemp, int heartRate) async {
+      double bs, double bodyTemp, int heartRate) async {
     return _riskDetectorRepository.fetchData(
         age, systolicBP, diastolicBP, bs, bodyTemp, heartRate);
   }

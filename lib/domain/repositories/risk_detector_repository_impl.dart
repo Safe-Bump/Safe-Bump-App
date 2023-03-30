@@ -10,7 +10,7 @@ class RiskDetectorRepositoryImpl extends RiskDetectorRepository {
 
   @override
   Future<String> fetchData(int age, int systolicBP, int diastolicBP, double bs,
-      int bodyTemp, int heartRate) async {
+      double bodyTemp, int heartRate) async {
     try {
       var risk = await _dio.get(
           "${AssetsHelper.risk_detector_api_base_url}age=$age&systolic_bp=$systolicBP&diastolic_bp=$diastolicBP&bs=$bs&body_temp=$bodyTemp&heart_rate=$heartRate");

@@ -22,7 +22,7 @@ class RiskDetectorViewModel extends ChangeNotifier {
   }
 
   Future<Void?> getRiskData(int age, int systolicBP, int diastolicBP, double bs,
-      int bodyTemp, int heartRate) async {
+      double bodyTemp, int heartRate) async {
     _riskData = await _riskDetectorUseCase.fetchRiskData(
         age, systolicBP, diastolicBP, bs, bodyTemp, heartRate);
     notifyListeners();
