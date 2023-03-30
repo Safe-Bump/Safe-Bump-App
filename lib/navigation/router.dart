@@ -12,6 +12,7 @@ import 'package:safe_bump/presentation/screen/onboarding/on_boarding_page.dart';
 import 'package:safe_bump/presentation/screen/signup_screen.dart';
 import 'package:safe_bump/presentation/screen/suggested_food_screen.dart';
 
+import '../presentation/screen/predicition_screen.dart';
 import '../presentation/screen/safe_bump_screen.dart';
 
 abstract class NavigationRoutes {
@@ -27,6 +28,7 @@ abstract class NavigationRoutes {
   static const String exercise_detail = '/exercise/detail';
   static const String food = '/food';
   static const String video_list = '/video_list';
+  static const String predictor = '/predictor';
 }
 
 class RouteGenerator {
@@ -43,6 +45,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ArticleScreen());
       case NavigationRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case NavigationRoutes.predictor:
+        return MaterialPageRoute(builder: (_) => PredictionScreen());
       case NavigationRoutes.onboarding:
         return MaterialPageRoute(builder: (_) => OnBoardingPage());
       case NavigationRoutes.signup:

@@ -137,10 +137,11 @@ class _DashboardViewState extends State<DashboardView> {
                     calendarFormat: CalendarFormat.week,
                     headerVisible: false,
                     daysOfWeekVisible: false,
+
                     rowHeight: 80,
                     calendarBuilders: CalendarBuilders(
                         defaultBuilder: (context, day, focusedDay) => Padding(
-                              padding: const EdgeInsets.all(3.0),
+                              padding: const EdgeInsets.symmetric(vertical: 3.0),
                               child: Container(
                                   padding: EdgeInsets.all(10),
                                   height: 40.h,
@@ -168,7 +169,7 @@ class _DashboardViewState extends State<DashboardView> {
                         todayBuilder: (context, day, focusedDay) => Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.symmetric(vertical: 10),
                                   height: 40.h,
                                   width: 20.w,
                                   child: Column(
@@ -304,9 +305,14 @@ class _DashboardViewState extends State<DashboardView> {
                         mainAxisSpacing: 10,
                       ),
                       children: [
-                        DashboardCard(
-                          icon: Icons.medical_information,
-                          name: "Medicine",
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, NavigationRoutes.predictor);
+                          },
+                          child: DashboardCard(
+                            icon: Icons.medical_information,
+                            name: "Medicine",
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
