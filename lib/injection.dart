@@ -15,20 +15,24 @@ import 'package:safe_bump/domain/repositories/calendar_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/dashboard_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/hospital_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/profile_repository_impl.dart';
+import 'package:safe_bump/domain/repositories/risk_detector_repository_impl.dart';
 import 'package:safe_bump/domain/usecases/calendar_use_case.dart';
 import 'package:safe_bump/domain/usecases/dashboard_use_case.dart';
 import 'package:safe_bump/domain/usecases/hospital_use_case.dart';
 import 'package:safe_bump/domain/usecases/login_use_case.dart';
 import 'package:safe_bump/domain/usecases/profile_use_case.dart';
+import 'package:safe_bump/domain/usecases/risk_detector_use_case.dart';
 import 'package:safe_bump/injection.config.dart';
 import 'package:safe_bump/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/calendar_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/dashboard_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/hospital_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/profile_viewmodel.dart';
+import 'package:safe_bump/presentation/viewmodel/risk_detector_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/timeline_viewmodel.dart';
 
 import 'data/repositories/login_repository.dart';
+import 'data/repositories/risk_detector_repository.dart';
 import 'data/repositories/timeline_repository.dart';
 import 'domain/repositories/firebase_auth_repository.dart';
 import 'domain/repositories/timeline_repository_impl.dart';
@@ -138,6 +142,22 @@ void configureHospitalModuleInjection() {
 }
 
 @module
+void configureRiskDetectorModuleInjection() {
+  final dio = locator<Dio>();
+  locator.registerLazySingleton<RiskDetectorRepository>(
+          () => RiskDetectorRepositoryImpl(dio));
+
+  if (!locator.isRegistered<RiskDetectorUseCase>())
+    locator.registerLazySingleton<RiskDetectorUseCase>(
+            () => RiskDetectorUseCase(locator<RiskDetectorRepository>()));
+
+  if (!locator.isRegistered<RiskDetectorViewModel>()) {
+    locator.registerFactory<RiskDetectorViewModel>(
+            () => RiskDetectorViewModel(locator<RiskDetectorUseCase>()));
+  }
+}
+
+@module
 void configureServicesModuleInjection() {
   locator.registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance);
@@ -155,5 +175,6 @@ void configureInjection(String environment) {
   configureProfileModuleInjection();
   configureTimelineModuleInjection();
   configureHospitalModuleInjection();
+  configureRiskDetectorModuleInjection();
   configureCalendarModuleInjection();
 }
