@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/injection.dart';
-import 'package:safe_bump/presentation/screen/login_screen.dart';
 import 'package:safe_bump/navigation/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';

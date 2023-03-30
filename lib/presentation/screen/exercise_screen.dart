@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/widgets/safe_bump_app_bar.dart';
+import 'package:safe_bump/utils/asset_helper.dart';
 import '../widgets/exercise_card.dart';
 
 class ExerciseScreen extends StatefulWidget {
@@ -12,47 +13,113 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
   List<Map<String, dynamic>> _firstTrimesterExercises = [
     {
-      'title': 'Pelvic tilts',
+      'title': 'Walking',
       'description':
-          'Pelvic tilts strengthen the muscles in your abdomen and help alleviate lower back pain.',
-      'image': 'assets/img.png',
+          'Walking is a great low-impact exercise that can help maintain fitness during the first trimester. Its easy to do and can be done anywhere.',
+      'image': AssetsHelper.walking,
     },
     {
-      'title': 'Kegel exercises',
+      'title': 'Swimming',
       'description':
-          'Kegel exercises strengthen your pelvic floor muscles, which support your uterus, bladder, and bowel.',
-      'image': 'assets/img.png',
+          'Swimming is a safe and low-impact exercise that can help alleviate pregnancy-related discomforts such as back pain and swollen ankles.',
+      'image': AssetsHelper.swimming,
     },
+    {
+      'title': 'Yoga',
+      'description':
+          'Yoga is a gentle form of exercise that can help improve flexibility, balance, and strength. Its also a great way to reduce stress and improve sleep.',
+      'image': AssetsHelper.yoga,
+    },
+    {
+      'title': 'Strength training',
+      'description':
+          'Strength training with light weights or resistance bands can help maintain muscle tone and prepare the body for the physical demands of pregnancy.',
+      'image': AssetsHelper.strength_training,
+    },
+    {
+      'title': 'Stretching',
+      'description':
+          'Gentle stretching can help alleviate muscle tension and improve flexibility during the first trimester.',
+      'image': AssetsHelper.stretching,
+    },
+    {
+      'title': 'Kegels',
+      'description':
+          'Kegel exercises can help strengthen the pelvic floor muscles, which can be weakened during pregnancy and childbirth.',
+      'image': AssetsHelper.kegels,
+    }
   ];
 
   List<Map<String, dynamic>> _secondTrimesterExercises = [
     {
-      'title': 'Squats',
+      'title': 'Prenatal Pilates',
       'description':
-          'Squats can help prepare your body for childbirth by strengthening your pelvic floor muscles and legs.',
-      'image': 'assets/img.png',
+          'Pilates is a great way to strengthen your core and improve your posture during pregnancy. Prenatal Pilates classes are designed to be safe and effective for expectant mothers.',
+      'image': AssetsHelper.prenatal_pilates,
     },
     {
-      'title': 'Lunges',
+      'title': 'Low-impact aerobics',
       'description':
-          'Lunges can help improve your balance and strengthen your legs and core muscles.',
-      'image': 'assets/img.png',
+          'Low-impact aerobics can help improve cardiovascular fitness and maintain muscle tone. Its important to choose a class specifically designed for pregnant women.',
+      'image': AssetsHelper.low_impact_aerobics,
     },
+    {
+      'title': 'Stationary cycling',
+      'description':
+          'Stationary cycling is a low-impact exercise that can help improve cardiovascular fitness and strengthen leg muscles.',
+      'image': AssetsHelper.stationary_cycling,
+    },
+    {
+      'title': 'Dancing',
+      'description':
+          'Dancing is a fun and low-impact way to improve cardiovascular fitness and maintain muscle tone during pregnancy.',
+      'image': AssetsHelper.dancing,
+    },
+    {
+      'title': 'Squats',
+      'description':
+          'Squats can help strengthen the legs and prepare the body for the physical demands of labor and delivery.',
+      'image': AssetsHelper.squats,
+    }
   ];
 
   List<Map<String, dynamic>> _thirdTrimesterExercises = [
     {
-      'title': 'Cat-cow stretch',
+      'title': 'Prenatal yoga',
       'description':
-          'The cat-cow stretch helps relieve lower back pain and stretches the muscles in your back and abdomen.',
-      'image': 'assets/img.png',
+          'Prenatal yoga can help prepare the body for labor and delivery by improving flexibility and strength. Its also a great way to reduce stress and improve sleep.',
+      'image': AssetsHelper.prenatal_yoga,
     },
     {
-      'title': 'Seated forward bend',
+      'title': 'Swimming',
       'description':
-          'The seated forward bend can help relieve tension in your back and stretch your hamstrings.',
-      'image': 'assets/img.png',
+          'Swimming is a great exercise during the third trimester because it reduces stress on the joints and can help alleviate discomforts such as back pain and swollen ankles.',
+      'image': AssetsHelper.swimming,
     },
+    {
+      'title': 'Walking',
+      'description':
+          'Walking is a safe and easy way to maintain fitness during the third trimester. It can also help prepare the body for labor by improving endurance.',
+      'image': AssetsHelper.walking,
+    },
+    {
+      'title': 'Pelvic tilts',
+      'description':
+          'Pelvic tilts can help alleviate back pain and improve posture during the third trimester.',
+      'image': AssetsHelper.pelvic_tilts,
+    },
+    {
+      'title': 'Wall push-ups',
+      'description':
+          'Wall push-ups can help maintain upper body strength and prepare the body for the physical demands of labor and delivery.',
+      'image': AssetsHelper.wall_push_ups,
+    },
+    {
+      'title': 'Modified planks',
+      'description':
+          'Modified planks can help strengthen the core muscles and prepare the body for pushing during labor.',
+      'image': AssetsHelper.modified_planks,
+    }
   ];
 
   @override
@@ -179,7 +246,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     return exercises
         .map(
           (exercise) => GestureDetector(
-            onTap: (){},
+            onTap: () {},
             child: ExerciseCard(
                 title: exercise['title'],
                 description: exercise['description'],

@@ -42,25 +42,25 @@ class _SafeBumpScreenState extends State<SafeBumpScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.dashboard_outlined),
                 ),
-                label: "He"),
+                label: "dashboard"),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.calendar_today_outlined),
                 ),
-                label: "Hey"),
+                label: "calendar"),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.view_timeline_outlined),
                 ),
-                label: "H"),
+                label: "timeline"),
             BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.person_outline_rounded),
                 ),
-                label: "Hi"),
+                label: "person"),
           ]),
       body: IndexedStack(
         children: [

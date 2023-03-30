@@ -297,7 +297,7 @@ class _DashboardViewState extends State<DashboardView> {
                     child: GridView(
                       primary: false,
                       physics: NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
