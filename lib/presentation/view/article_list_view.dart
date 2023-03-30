@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_bump/navigation/router.dart';
+import 'package:safe_bump/presentation/screen/article_screen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:safe_bump/utils/asset_helper.dart';
 import '../widgets/safe_bump_app_bar.dart';
@@ -66,7 +67,14 @@ class ArticleListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, NavigationRoutes.article, arguments:"$index");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ArticleScreen(
+              index: index,
+            ),
+          ),
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

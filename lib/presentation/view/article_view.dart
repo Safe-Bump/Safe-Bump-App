@@ -5,7 +5,9 @@ import '../../utils/asset_helper.dart';
 import '../widgets/safe_bump_app_bar.dart';
 
 class ArticleView extends StatefulWidget {
-  const ArticleView({Key? key}) : super(key: key);
+  final int index;
+
+  const ArticleView({Key? key, required this.index}) : super(key: key);
 
   @override
   State<ArticleView> createState() => _ArticleViewState();
@@ -14,13 +16,7 @@ class ArticleView extends StatefulWidget {
 class _ArticleViewState extends State<ArticleView> {
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context)?.settings.arguments);
-    final index = int.parse(
-        ((ModalRoute.of(context)?.settings.arguments as String?) == null)
-            ? "0"
-            : ((ModalRoute.of(context)?.settings.arguments as String?)!));
-    var article = AssetsHelper.articleData[index];
-
+    var article = AssetsHelper.articleData[widget.index];
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: SafeBumpAppBar(
@@ -47,9 +43,10 @@ class _ArticleViewState extends State<ArticleView> {
                         children: [
                           Text(
                             article["title"],
+                            overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
-                                .headlineMedium
+                                .headlineSmall
                                 ?.copyWith(color: Colors.pinkAccent),
                           ),
                           Icon(Icons.bookmark_border_rounded)

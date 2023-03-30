@@ -41,7 +41,7 @@ class RouteGenerator {
       case NavigationRoutes.articleList:
         return MaterialPageRoute(builder: (_) => const ArticleListScreen());
       case NavigationRoutes.article:
-        return MaterialPageRoute(builder: (_) => const ArticleScreen());
+        return MaterialPageRoute(builder: (_) => const ArticleScreen(index: 0,));
       case NavigationRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case NavigationRoutes.predictor:

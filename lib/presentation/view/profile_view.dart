@@ -33,9 +33,8 @@ class _ProfileViewState extends State<ProfileView> {
       builder: (context, profileViewModel, child) => Scaffold(
         appBar: SafeBumpAppBar(
           // leadingWidget: Icon(Icons.menu_rounded),
-          trailingWidget: Icon(Icons.add),
           title:
-              "Week: ${(DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((profileViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7}",
+              "Week: ${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((profileViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7)+1}",
         ),
         body: LayoutBuilder(
           builder: (context, constraints) => Padding(
