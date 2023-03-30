@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/view/profile_view.dart';
+import 'package:safe_bump/utils/asset_helper.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../navigation/router.dart';
@@ -14,6 +15,7 @@ class VideoListView extends StatefulWidget {
 }
 
 class _VideoListViewState extends State<VideoListView> {
+  List<Map<String, dynamic>> _videoData = AssetsHelper.articleData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +30,15 @@ class _VideoListViewState extends State<VideoListView> {
                   height: constraints.maxHeight,
                   child: ListView.builder(
                       padding: const EdgeInsets.all(8),
-                      itemCount: 5,
+                      itemCount: _videoData.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        return VideoListCard();
+                        final data = _videoData[index];
+                        return VideoListCard(
+                          title: data['title'],
+                          detail: data['detail'],
+                          image: data['image'],
+                        );
                       }),
                 ),
               )),
@@ -40,7 +47,16 @@ class _VideoListViewState extends State<VideoListView> {
 }
 
 class VideoListCard extends StatelessWidget {
-  const VideoListCard({Key? key}) : super(key: key);
+  final String title;
+  final String detail;
+  final String image;
+
+  const VideoListCard({
+    Key? key,
+    required this.title,
+    required this.detail,
+    required this.image
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +75,14 @@ class VideoListCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 child: Stack(alignment:AlignmentDirectional.center,children: [
-                  Placeholder(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.asset(
+                      image,
+                      height: 30.h,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   Card(
                     child: Icon(Icons.play_arrow_rounded,size: 50,),
                     shape: CircleBorder(),
@@ -70,13 +93,13 @@ class VideoListCard extends StatelessWidget {
                 height: 2.h,
               ),
               Text(
-                "Yoga",
+                title,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
                 height: 1.h,
               ),
-              Text("Lore", style: Theme.of(context).textTheme.bodySmall),
+              Text('${detail.substring(0, 50)}...', style: Theme.of(context).textTheme.bodySmall),
               SizedBox(
                 height: 1.h,
               ),

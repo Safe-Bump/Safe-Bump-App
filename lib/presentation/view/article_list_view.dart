@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:safe_bump/navigation/router.dart';
 import 'package:safe_bump/presentation/screen/article_screen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:safe_bump/utils/asset_helper.dart';
@@ -83,10 +82,13 @@ class ArticleListCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                image,
-                height: 30.h,
-                fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset(
+                  image,
+                  height: 30.h,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(height: 2.h),
               Text(

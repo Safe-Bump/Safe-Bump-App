@@ -13,6 +13,9 @@ class SuggestedFoodScreen extends StatefulWidget {
 }
 
 class _SuggestedFoodScreenState extends State<SuggestedFoodScreen> {
+
+  List<Map<String, dynamic>> _foodData = AssetsHelper.foodData;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,81 +24,32 @@ class _SuggestedFoodScreenState extends State<SuggestedFoodScreen> {
         trailingWidget: Icon(Icons.more_vert),
         title: 'Suggested Food',
       ),
-      body: Column(
-        children: [
-          Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TableCalendar(
-                    weekNumbersVisible: true,
-                    headerVisible: false,
-                    daysOfWeekVisible: false,
-                    focusedDay: DateTime.now(),
-                    firstDay: DateTime.utc(2010, 10, 16),
-                    lastDay: DateTime.utc(2030, 3, 14),
-                    calendarFormat: CalendarFormat.week,
-                    calendarBuilders: CalendarBuilders(
-                        todayBuilder: (context, day, focusedDay) => Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Center(
-                                    child: Text(
-                                      day.day.toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(color: Colors.white),
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.pinkAccent,
-                                      shape: BoxShape.circle)),
-                            ),
-                        defaultBuilder: (context, day, focusedDay) => Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Center(
-                                    child: Text(
-                                      day.day.toString(),
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      shape: BoxShape.circle)),
-                            ))),
-                Container(
-                  height: 40.h,
-                  child: ListView.builder(
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xffFFCDD2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            width: 10.w,
-                            height: 10.w,
-                            child: SvgPicture.asset(
-                              AssetsHelper.seedSvg,
-                              color: Colors.pink,
-                            ),
-                          ),
-                          title: Text('Spinach'),
-                          subtitle: Text('One serving per week'),
-                        );
-                      }),
+      body: Container(
+        child: Container(
+          child: ListView.builder(
+            itemCount: _foodData.length,
+            itemBuilder: (context, index) {
+              final data = _foodData[index];
+              return ListTile(
+                leading: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFCDD2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: 10.w,
+                  height: 10.w,
+                  child: SvgPicture.asset(
+                    AssetsHelper.seedSvg,
+                    color: Colors.pink,
+                  ),
                 ),
-              ],
-            ),
+                title: Text(data['food_name']),
+                subtitle: Text('${data['description'].substring(0, 50)}...'),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      )
     );
   }
 }

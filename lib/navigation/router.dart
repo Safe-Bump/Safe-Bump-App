@@ -23,6 +23,7 @@ abstract class NavigationRoutes {
   static const String signup = '/signup';
   static const String articleList = '/profile/article_list';
   static const String article = '/profile/article_list/article';
+  static const String advise = '/advise';
   static const String map = '/dashboard/map';
   static const String exercise = '/exercise';
   static const String exercise_detail = '/exercise/detail';
