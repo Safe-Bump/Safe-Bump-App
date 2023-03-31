@@ -61,7 +61,7 @@ Contributions are welcome! If you find any bugs or have ideas for additional fea
 
 Team:
 - Aditya Choudary
-- Chandra Mouli Sharma
+- Chandra Mauli Sharma
 - Prashant Kumar Singh
 
 ## License
