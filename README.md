@@ -53,5 +53,18 @@ To run the project:
 
 To install the dependencies, run the following command:
 
-```sh
-flutter pub get
+    flutter pub get
+
+## Contributions
+
+Contributions are welcome! If you find any bugs or have ideas for additional features, please submit an issue or pull request.
+
+Team:
+- Aditya Choudary
+- Chandra Mouli Sharma
+- Prashant Kumar Singh
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
