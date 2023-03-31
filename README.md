@@ -1,16 +1,25 @@
-# safe_bump
+# Safe Bump - GOOD HEALTH AND WELL-BEING
 
-A new Flutter project.
+Safe Bump is a flutter dart based project for tracking bumps on the road for safety purposes.
 
-## Getting Started
+## Prerequisites and Installation
 
-This project is a starting point for a Flutter application.
+* Flutter SDK: https://flutter.dev/docs/get-started/install
+* Android Studio / VS Code: https://flutter.dev/docs/get-started/editor
 
-A few resources to get you started if this is your first Flutter project:
+To run the project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone the repository.
+2. Open it in Android Studio / VS Code.
+3. Run the command `flutter pub get` in the terminal.
+4. Run the app on an emulator or device.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Dependencies
+
+* Flutter SDK
+* Google Maps API
+
+To install the dependencies, run the following command:
+
+```sh
+flutter pub get
