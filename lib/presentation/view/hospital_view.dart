@@ -150,14 +150,8 @@ class _HospitalViewState extends State<HospitalView> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(20.0),
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Placeholder(
-                                              fallbackWidth: 50,
-                                              fallbackHeight: 50,
-                                            ),
-                                            SizedBox(
-                                              width: 2.w,
-                                            ),
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,

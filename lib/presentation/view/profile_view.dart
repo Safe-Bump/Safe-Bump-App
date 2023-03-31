@@ -27,6 +27,9 @@ class _ProfileViewState extends State<ProfileView> {
     profileViewModel.getPregnancyDetails();
   }
 
+  static const List<Map<String, dynamic>> _articleData =
+      AssetsHelper.articleData;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileViewModel>(
@@ -34,7 +37,7 @@ class _ProfileViewState extends State<ProfileView> {
         appBar: SafeBumpAppBar(
           // leadingWidget: Icon(Icons.menu_rounded),
           title:
-              "Week: ${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((profileViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7)+1}",
+              "Week: ${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((profileViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7) + 1}",
         ),
         body: LayoutBuilder(
           builder: (context, constraints) => Padding(
@@ -288,11 +291,14 @@ class _ProfileViewState extends State<ProfileView> {
                     height: constraints.maxHeight * 0.3,
                     child: ListView.builder(
                         padding: const EdgeInsets.all(8),
-                        itemCount: 5,
+                        itemCount: 2,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return SavedVideoCard();
+                          final data = _articleData[index + 3];
+                          return SavedVideoCard(
+                            image: data['image'],
+                          );
                         }),
                   ),
                   Text(
@@ -303,11 +309,14 @@ class _ProfileViewState extends State<ProfileView> {
                     height: constraints.maxHeight * 0.3,
                     child: ListView.builder(
                         padding: const EdgeInsets.all(8),
-                        itemCount: 5,
+                        itemCount: 2,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return ArticleCard();
+                          final data = _articleData[index];
+                          return ArticleCard(
+                            image: data['image'],
+                          );
                         }),
                   ),
                 ],
@@ -322,7 +331,8 @@ class _ProfileViewState extends State<ProfileView> {
 }
 
 class SavedVideoCard extends StatelessWidget {
-  const SavedVideoCard({Key? key}) : super(key: key);
+  final String image;
+  const SavedVideoCard({Key? key, required this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -332,7 +342,14 @@ class SavedVideoCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Stack(alignment: AlignmentDirectional.center, children: [
-          Placeholder(),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset(
+              image,
+              height: 30.h,
+              fit: BoxFit.fill,
+            ),
+          ),
           Card(
             child: Icon(Icons.play_arrow_rounded),
             shape: CircleBorder(),
@@ -344,7 +361,12 @@ class SavedVideoCard extends StatelessWidget {
 }
 
 class ArticleCard extends StatelessWidget {
-  const ArticleCard({Key? key}) : super(key: key);
+  final String image;
+
+  const ArticleCard({
+    Key? key,
+    required this.image,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +379,14 @@ class ArticleCard extends StatelessWidget {
         child: Card(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
-          child: Placeholder(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset(
+              image,
+              height: 30.h,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );

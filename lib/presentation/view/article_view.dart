@@ -30,7 +30,7 @@ class _ArticleViewState extends State<ArticleView> {
             Image.asset(
               article["image"],
               height: 30.h,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
             Container(
               child: Padding(

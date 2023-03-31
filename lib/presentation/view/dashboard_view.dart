@@ -123,7 +123,7 @@ class _DashboardViewState extends State<DashboardView> {
                     height: 1.h,
                   ),
                   Text(
-                    "${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((dashboardViewModel.pregnancyDetails?.startingDay) == null ? 1 : (dashboardViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7) + 1}st Week of Pregnancy",
+                    "${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((dashboardViewModel.pregnancyDetails?.startingDay) == null ? 1 : (dashboardViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7) + 1}nd Week of Pregnancy",
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   SizedBox(
@@ -311,7 +311,7 @@ class _DashboardViewState extends State<DashboardView> {
                           },
                           child: DashboardCard(
                             icon: Icons.medical_information,
-                            name: "Medicine",
+                            name: "Prediction",
                           ),
                         ),
                         GestureDetector(
