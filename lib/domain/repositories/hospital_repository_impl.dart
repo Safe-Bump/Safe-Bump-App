@@ -16,9 +16,9 @@ class HospitalRepositoryImpl extends HospitalRepository {
   Future<Hospital?> getHospitalList(LatLng latLng) async {
     try {
       var hospitalResponse = await _dio.get(
-          "${AssetsHelper.place_api_base_url}location=${latLng.latitude}%2C${latLng.longitude}&radius=10000&type=hospital&key=AIzaSyBtygbeWna36e0chLf0XRZjXINgjen8zAw");
+          "${AssetsHelper.place_api_base_url}location=${latLng.latitude}%2C${latLng.longitude}&radius=10000&type=hospital&key=${AssetsHelper.place_api_key}");
 
-      var hospitalData=Hospital.fromJson(hospitalResponse.data);
+      var hospitalData = Hospital.fromJson(hospitalResponse.data);
       // var photoResponse = await _dio.get(
       //     "${AssetsHelper.place_photo_api_base_url}maxwidth=400&photo_reference=photo_reference");
       return hospitalData;
