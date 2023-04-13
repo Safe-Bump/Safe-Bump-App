@@ -60,7 +60,7 @@ To install the dependencies, run the following command:
 Contributions are welcome! If you find any bugs or have ideas for additional features, please submit an issue or pull request.
 
 Team:
-- Aditya Choudary
+- Aditya Chaudhary
 - Chandra Mauli Sharma
 - Prashant Kumar Singh
 
