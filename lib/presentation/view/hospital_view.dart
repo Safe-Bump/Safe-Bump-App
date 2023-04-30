@@ -40,18 +40,14 @@ class _HospitalViewState extends State<HospitalView> {
     }
   }
 
-  Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission()
-        .then((value) {})
-        .onError((error, stackTrace) async {
-      await Geolocator.requestPermission();
-    });
-    return await Geolocator.getCurrentPosition();
-  }
-
   @override
   void initState() {
     super.initState();
+    var hospitalViewModel =
+        Provider.of<HospitalViewModel>(context, listen: false);
+
+    hospitalViewModel.getUserCurrentLocation();
+
   }
 
   @override
@@ -98,8 +94,9 @@ class _HospitalViewState extends State<HospitalView> {
                                 ),
                                 IconButton(
                                     onPressed: () async {
-                                      getUserCurrentLocation()
-                                          .then((value) async {
+                                      var value =
+                                          hospitalViewModel.currentPosition;
+                                      if (value != null) {
                                         var cameraPosition = new CameraPosition(
                                             target: LatLng(value.latitude,
                                                 value.longitude),
@@ -114,11 +111,9 @@ class _HospitalViewState extends State<HospitalView> {
                                         controller.animateCamera(
                                             CameraUpdate.newCameraPosition(
                                                 cameraPosition));
-                                        hospitalViewModel.getHospitalList(
-                                            LatLng(value.latitude,
-                                                value.longitude));
+                                        hospitalViewModel.getHospitalList();
                                         setState(() {});
-                                      });
+                                      }
                                     },
                                     icon: Icon(Icons.location_searching))
                               ],
@@ -150,7 +145,8 @@ class _HospitalViewState extends State<HospitalView> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(20.0),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Column(
                                               crossAxisAlignment:

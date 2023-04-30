@@ -8,18 +8,21 @@ import 'package:injectable/injectable.dart';
 import 'package:safe_bump/data/repositories/calendar_repository.dart';
 import 'package:safe_bump/data/repositories/dashboard_repository.dart';
 import 'package:safe_bump/data/repositories/hospital_repository.dart';
+import 'package:safe_bump/data/repositories/pregnancy_detail_repository.dart';
 import 'package:safe_bump/data/repositories/profile_repository.dart';
 import 'package:safe_bump/domain/entities/user_model.dart';
 import 'package:safe_bump/domain/entities/user_model.dart';
 import 'package:safe_bump/domain/repositories/calendar_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/dashboard_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/hospital_repository_impl.dart';
+import 'package:safe_bump/domain/repositories/pregnancy_detail_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/profile_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/risk_detector_repository_impl.dart';
 import 'package:safe_bump/domain/usecases/calendar_use_case.dart';
 import 'package:safe_bump/domain/usecases/dashboard_use_case.dart';
 import 'package:safe_bump/domain/usecases/hospital_use_case.dart';
 import 'package:safe_bump/domain/usecases/login_use_case.dart';
+import 'package:safe_bump/domain/usecases/pregnancy_detail_use_case.dart';
 import 'package:safe_bump/domain/usecases/profile_use_case.dart';
 import 'package:safe_bump/domain/usecases/risk_detector_use_case.dart';
 import 'package:safe_bump/injection.config.dart';
@@ -27,6 +30,7 @@ import 'package:safe_bump/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/calendar_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/dashboard_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/hospital_viewmodel.dart';
+import 'package:safe_bump/presentation/viewmodel/pregnancy_detail_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/profile_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/risk_detector_viewmodel.dart';
 import 'package:safe_bump/presentation/viewmodel/timeline_viewmodel.dart';
@@ -44,9 +48,10 @@ final locator = GetIt.instance;
 void configureLoginModuleInjection() {
   final firebaseAuth = locator<FirebaseAuth>();
   final googleSignIn = locator<GoogleSignIn>();
+  final firestore = locator<FirebaseFirestore>();
 
   locator.registerLazySingleton<LoginRepository>(
-      () => FirebaseAuthRepository(firebaseAuth, googleSignIn));
+      () => FirebaseAuthRepository(firebaseAuth, googleSignIn, firestore));
   if (!locator.isRegistered<LoginUseCase>())
     locator.registerLazySingleton<LoginUseCase>(
         () => LoginUseCase(locator<LoginRepository>()));
@@ -90,12 +95,30 @@ void configureCalendarModuleInjection() {
 }
 
 @module
+void configurePregnancyDetailModuleInjection() {
+  final firebaseAuth = locator<FirebaseAuth>();
+  final firestore = locator<FirebaseFirestore>();
+
+  locator.registerLazySingleton<PregnancyDetailRepository>(
+      () => PregnancyDetailRepositoryImpl(firebaseAuth, firestore));
+
+  if (!locator.isRegistered<PregnancyDetailUseCase>())
+    locator.registerLazySingleton<PregnancyDetailUseCase>(
+        () => PregnancyDetailUseCase(locator<PregnancyDetailRepository>()));
+
+  if (!locator.isRegistered<PregnancyDetailViewModel>()) {
+    locator.registerFactory<PregnancyDetailViewModel>(
+        () => PregnancyDetailViewModel(locator<PregnancyDetailUseCase>()));
+  }
+}
+
+@module
 void configureProfileModuleInjection() {
   final firebaseAuth = locator<FirebaseAuth>();
   final firestore = locator<FirebaseFirestore>();
 
   locator.registerLazySingleton<ProfileRepository>(
-      () => ProfileRepositoryImpl(firestore));
+      () => ProfileRepositoryImpl(firestore, firebaseAuth));
 
   if (!locator.isRegistered<ProfileUseCase>())
     locator.registerLazySingleton<ProfileUseCase>(
@@ -113,7 +136,7 @@ void configureTimelineModuleInjection() {
   final firestore = locator<FirebaseFirestore>();
 
   locator.registerLazySingleton<TimelineRepository>(
-      () => TimelineRepositoryImpl(firestore));
+      () => TimelineRepositoryImpl(firestore, firebaseAuth));
 
   if (!locator.isRegistered<TimelineUseCase>())
     locator.registerLazySingleton<TimelineUseCase>(
@@ -145,15 +168,15 @@ void configureHospitalModuleInjection() {
 void configureRiskDetectorModuleInjection() {
   final dio = locator<Dio>();
   locator.registerLazySingleton<RiskDetectorRepository>(
-          () => RiskDetectorRepositoryImpl(dio));
+      () => RiskDetectorRepositoryImpl(dio));
 
   if (!locator.isRegistered<RiskDetectorUseCase>())
     locator.registerLazySingleton<RiskDetectorUseCase>(
-            () => RiskDetectorUseCase(locator<RiskDetectorRepository>()));
+        () => RiskDetectorUseCase(locator<RiskDetectorRepository>()));
 
   if (!locator.isRegistered<RiskDetectorViewModel>()) {
     locator.registerFactory<RiskDetectorViewModel>(
-            () => RiskDetectorViewModel(locator<RiskDetectorUseCase>()));
+        () => RiskDetectorViewModel(locator<RiskDetectorUseCase>()));
   }
 }
 
@@ -177,4 +200,5 @@ void configureInjection(String environment) {
   configureHospitalModuleInjection();
   configureRiskDetectorModuleInjection();
   configureCalendarModuleInjection();
+  configurePregnancyDetailModuleInjection();
 }

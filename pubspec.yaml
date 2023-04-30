@@ -35,6 +35,8 @@ dependencies:
   equatable: ^2.0.5
   dio: ^5.1.0
   url_launcher: ^6.1.10
+  video_player: ^2.6.1
+  home_widget: ^0.2.0+1
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +61,7 @@ flutter:
   assets:
     - assets/images/article/
     - assets/images/exercise/
+    - assets/images/pregnancy detail/
     - assets/images/logo.png
     - assets/images/google_icon.png
     - assets/svg/onboarding/

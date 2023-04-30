@@ -17,7 +17,7 @@ class DashboardRepositoryImpl extends DashboardRepository {
     try {
       var user = await _firestore
           .collection("User")
-          .doc("DlmyxsohA5Uo4HhVEwHYC9DJ6sC2")
+          .doc(_firebaseAuth.currentUser?.uid)
           .get();
 
       return UserModel.fromJson(user.data()!);
@@ -31,9 +31,12 @@ class DashboardRepositoryImpl extends DashboardRepository {
     try {
       var pregnancyDetails = await _firestore
           .collection("Pregnancy Detail")
-          .doc("DlmyxsohA5Uo4HhVEwHYC9DJ6sC2")
+          .doc(_firebaseAuth.currentUser?.uid)
           .get();
-      return PregnancyDetails.fromJson(pregnancyDetails.data()!);
+      if (pregnancyDetails.data() != null)
+        return PregnancyDetails.fromJson(pregnancyDetails.data()!);
+      else
+        return null;
     } on Exception catch (e) {
       return null;
     }

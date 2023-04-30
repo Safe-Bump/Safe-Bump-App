@@ -50,11 +50,10 @@ class _TimelineViewState extends State<TimelineView> {
                                                 DateTime.now()
                                                     .millisecondsSinceEpoch)
                                             .difference(DateTime
-                                                .fromMillisecondsSinceEpoch(
+                                                .fromMillisecondsSinceEpoch(timelineViewModel.pregnancyDetails?.startingDay == null ? 0 :
                                                     (timelineViewModel
                                                             .pregnancyDetails
-                                                            ?.startingDay)! *
-                                                        (24 * 60 * 60 * 1000)))
+                                                            ?.startingDay)!))
                                             .inDays) ~/
                                         7)
                             ? Colors.pink

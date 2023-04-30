@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_bump/presentation/screen/pregnancy_detail_screen.dart';
 import 'package:safe_bump/presentation/screen/video_list_screen.dart';
 import 'package:safe_bump/presentation/screen/article_list_screen.dart';
 import 'package:safe_bump/presentation/screen/article_screen.dart';
@@ -30,6 +31,7 @@ abstract class NavigationRoutes {
   static const String food = '/food';
   static const String video_list = '/video_list';
   static const String predictor = '/predictor';
+  static const String pregnancy_detail = '/pregnancy_detail';
 }
 
 class RouteGenerator {
@@ -59,6 +61,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => VideoListScreen());
       case NavigationRoutes.food:
         return MaterialPageRoute(builder: (_) => SuggestedFoodScreen());
+      case NavigationRoutes.pregnancy_detail:
+        return MaterialPageRoute(builder: (_) => PregnancyDetailScreen());
       case NavigationRoutes.exercise_detail:
         return MaterialPageRoute(builder: (_) => ExerciseDetailPage(title: "title", description: "description", image: "image"));
       default:

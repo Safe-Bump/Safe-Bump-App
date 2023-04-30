@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/view/profile_view.dart';
 import 'package:safe_bump/utils/asset_helper.dart';
 import 'package:sizer/sizer.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../navigation/router.dart';
 import '../widgets/safe_bump_app_bar.dart';
@@ -16,6 +17,7 @@ class VideoListView extends StatefulWidget {
 
 class _VideoListViewState extends State<VideoListView> {
   List<Map<String, dynamic>> _videoData = AssetsHelper.articleData;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +53,12 @@ class VideoListCard extends StatelessWidget {
   final String detail;
   final String image;
 
-  const VideoListCard({
-    Key? key,
-    required this.title,
-    required this.detail,
-    required this.image
-  }) : super(key: key);
+  const VideoListCard(
+      {Key? key,
+      required this.title,
+      required this.detail,
+      required this.image})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class VideoListCard extends StatelessWidget {
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: Stack(alignment:AlignmentDirectional.center,children: [
+                child: Stack(alignment: AlignmentDirectional.center, children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.asset(
@@ -84,7 +86,10 @@ class VideoListCard extends StatelessWidget {
                     ),
                   ),
                   Card(
-                    child: Icon(Icons.play_arrow_rounded,size: 50,),
+                    child: Icon(
+                      Icons.play_arrow_rounded,
+                      size: 50,
+                    ),
                     shape: CircleBorder(),
                   ),
                 ]),
@@ -99,7 +104,8 @@ class VideoListCard extends StatelessWidget {
               SizedBox(
                 height: 1.h,
               ),
-              Text('${detail.substring(0, 50)}...', style: Theme.of(context).textTheme.bodySmall),
+              Text('${detail.substring(0, 50)}...',
+                  style: Theme.of(context).textTheme.bodySmall),
               SizedBox(
                 height: 1.h,
               ),

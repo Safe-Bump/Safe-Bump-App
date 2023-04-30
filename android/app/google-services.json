@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "196643596181-98ar3ves1rmn49843456bnitcqp9s4at.apps.googleusercontent.com",
+          "client_id": "196643596181-ugj5fc9i5c1k4d73ce5jbctabt72klsm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.safe_bump",
+            "certificate_hash": "82dbaf3e8922bbfe3b91dbe1b1f52f2028908b68"
+          }
+        },
+        {
+          "client_id": "196643596181-6j7eg8a39b12vb4d61gqnndd1vrqifk6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "196643596181-98ar3ves1rmn49843456bnitcqp9s4at.apps.googleusercontent.com",
+              "client_id": "196643596181-6j7eg8a39b12vb4d61gqnndd1vrqifk6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

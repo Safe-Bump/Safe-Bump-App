@@ -27,18 +27,25 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
         children: [
           Image.asset(widget.image),
           const SizedBox(height: 16),
-          Text(
-            widget.title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            widget.description,
-            style: const TextStyle(
-              fontSize: 18,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  widget.title,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  widget.description,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

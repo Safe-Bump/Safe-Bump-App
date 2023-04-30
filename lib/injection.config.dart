@@ -15,18 +15,22 @@ import 'package:safe_bump/data/repositories/calendar_repository.dart' as _i4;
 import 'package:safe_bump/data/repositories/dashboard_repository.dart' as _i6;
 import 'package:safe_bump/data/repositories/hospital_repository.dart' as _i8;
 import 'package:safe_bump/data/repositories/login_repository.dart' as _i10;
-import 'package:safe_bump/data/repositories/profile_repository.dart' as _i12;
+import 'package:safe_bump/data/repositories/pregnancy_detail_repository.dart'
+    as _i12;
+import 'package:safe_bump/data/repositories/profile_repository.dart' as _i14;
 import 'package:safe_bump/data/repositories/risk_detector_repository.dart'
-    as _i14;
-import 'package:safe_bump/data/repositories/timeline_repository.dart' as _i16;
+    as _i16;
+import 'package:safe_bump/data/repositories/timeline_repository.dart' as _i18;
 import 'package:safe_bump/domain/usecases/calendar_use_case.dart' as _i3;
 import 'package:safe_bump/domain/usecases/dashboard_use_case.dart' as _i5;
 import 'package:safe_bump/domain/usecases/hospital_use_case.dart' as _i7;
 import 'package:safe_bump/domain/usecases/login_use_case.dart' as _i9;
-import 'package:safe_bump/domain/usecases/profile_use_case.dart' as _i11;
-import 'package:safe_bump/domain/usecases/risk_detector_use_case.dart' as _i13;
-import 'package:safe_bump/domain/usecases/timeline_use_case.dart' as _i15;
-import 'package:safe_bump/presentation/viewmodel/auth_viewmodel.dart' as _i17;
+import 'package:safe_bump/domain/usecases/pregnancy_detail_use_case.dart'
+    as _i11;
+import 'package:safe_bump/domain/usecases/profile_use_case.dart' as _i13;
+import 'package:safe_bump/domain/usecases/risk_detector_use_case.dart' as _i15;
+import 'package:safe_bump/domain/usecases/timeline_use_case.dart' as _i17;
+import 'package:safe_bump/presentation/viewmodel/auth_viewmodel.dart' as _i19;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -47,14 +51,16 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i7.HospitalUseCase(gh<_i8.HospitalRepository>()));
     gh.factory<_i9.LoginUseCase>(
         () => _i9.LoginUseCase(gh<_i10.LoginRepository>()));
-    gh.factory<_i11.ProfileUseCase>(
-        () => _i11.ProfileUseCase(gh<_i12.ProfileRepository>()));
-    gh.factory<_i13.RiskDetectorUseCase>(
-        () => _i13.RiskDetectorUseCase(gh<_i14.RiskDetectorRepository>()));
-    gh.factory<_i15.TimelineUseCase>(
-        () => _i15.TimelineUseCase(gh<_i16.TimelineRepository>()));
-    gh.factory<_i17.AuthViewModel>(
-        () => _i17.AuthViewModel(gh<_i9.LoginUseCase>()));
+    gh.factory<_i11.PregnancyDetailUseCase>(() =>
+        _i11.PregnancyDetailUseCase(gh<_i12.PregnancyDetailRepository>()));
+    gh.factory<_i13.ProfileUseCase>(
+        () => _i13.ProfileUseCase(gh<_i14.ProfileRepository>()));
+    gh.factory<_i15.RiskDetectorUseCase>(
+        () => _i15.RiskDetectorUseCase(gh<_i16.RiskDetectorRepository>()));
+    gh.factory<_i17.TimelineUseCase>(
+        () => _i17.TimelineUseCase(gh<_i18.TimelineRepository>()));
+    gh.factory<_i19.AuthViewModel>(
+        () => _i19.AuthViewModel(gh<_i9.LoginUseCase>()));
     return this;
   }
 }

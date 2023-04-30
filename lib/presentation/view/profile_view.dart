@@ -37,7 +37,7 @@ class _ProfileViewState extends State<ProfileView> {
         appBar: SafeBumpAppBar(
           // leadingWidget: Icon(Icons.menu_rounded),
           title:
-              "Week: ${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((profileViewModel.pregnancyDetails?.startingDay)! * (24 * 60 * 60 * 1000))).inDays) ~/ 7) + 1}",
+              "Week: ${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch(profileViewModel.pregnancyDetails?.startingDay == null ? 0 : ((profileViewModel.pregnancyDetails?.startingDay)!))).inDays) ~/ 7) + 1}",
         ),
         body: LayoutBuilder(
           builder: (context, constraints) => Padding(
@@ -51,18 +51,16 @@ class _ProfileViewState extends State<ProfileView> {
                       daysOfWeekVisible: false,
                       focusedDay: DateTime.now(),
                       firstDay: DateTime.fromMillisecondsSinceEpoch(
-                          (profileViewModel.pregnancyDetails?.startingDay)! *
-                              24 *
-                              60 *
-                              60 *
-                              1000),
+                          profileViewModel.pregnancyDetails?.startingDay == null
+                              ? 0
+                              : (profileViewModel
+                                  .pregnancyDetails?.startingDay)!),
                       lastDay: DateTime.fromMillisecondsSinceEpoch(
-                              (profileViewModel
-                                      .pregnancyDetails?.startingDay)! *
-                                  24 *
-                                  60 *
-                                  60 *
-                                  1000)
+                              profileViewModel.pregnancyDetails?.startingDay ==
+                                      null
+                                  ? 0
+                                  : (profileViewModel
+                                      .pregnancyDetails?.startingDay)!)
                           .add(Duration(days: 280)),
                       calendarFormat: CalendarFormat.week,
                       calendarBuilders: CalendarBuilders(
@@ -76,10 +74,14 @@ class _ProfileViewState extends State<ProfileView> {
                                               day.millisecondsSinceEpoch)
                                           .difference(DateTime
                                               .fromMillisecondsSinceEpoch(
-                                                  (profileViewModel
+                                                  profileViewModel
+                                                              .pregnancyDetails
+                                                              ?.startingDay ==
+                                                          null
+                                                      ? 0
+                                                      : (profileViewModel
                                                           .pregnancyDetails
-                                                          ?.startingDay)! *
-                                                      (24 * 60 * 60 * 1000)))
+                                                          ?.startingDay)!))
                                           .inDays))
                                       .toString(),
                                   style: Theme.of(context)
@@ -103,9 +105,8 @@ class _ProfileViewState extends State<ProfileView> {
                                           .difference(DateTime
                                               .fromMillisecondsSinceEpoch(
                                                   (profileViewModel
-                                                          .pregnancyDetails
-                                                          ?.startingDay)! *
-                                                      (24 * 60 * 60 * 1000)))
+                                                      .pregnancyDetails
+                                                      ?.startingDay)!))
                                           .inDays)
                                       .toString(),
                                   style: Theme.of(context).textTheme.bodyLarge,
@@ -127,8 +128,7 @@ class _ProfileViewState extends State<ProfileView> {
                                               .fromMillisecondsSinceEpoch(
                                                   (profileViewModel
                                                           .pregnancyDetails
-                                                          ?.startingDay)! *
-                                                      (24 * 60 * 60 * 1000)))
+                                                          ?.startingDay)!))
                                           .inDays)
                                       .toString(),
                                   style: Theme.of(context).textTheme.bodyLarge,
@@ -197,13 +197,14 @@ class _ProfileViewState extends State<ProfileView> {
                                                           .millisecondsSinceEpoch)
                                                   .difference(DateTime
                                                       .fromMillisecondsSinceEpoch(
-                                                          (profileViewModel
+                                                          profileViewModel
+                                                                      .pregnancyDetails
+                                                                      ?.startingDay ==
+                                                                  null
+                                                              ? 0
+                                                              : (profileViewModel
                                                                   .pregnancyDetails
-                                                                  ?.startingDay)! *
-                                                              (24 *
-                                                                  60 *
-                                                                  60 *
-                                                                  1000)))
+                                                                  ?.startingDay)!))
                                                   .inDays))
                                           .toString(),
                                       style:
@@ -253,15 +254,15 @@ class _ProfileViewState extends State<ProfileView> {
                                                   (DateTime.fromMillisecondsSinceEpoch(
                                                           DateTime.now()
                                                               .millisecondsSinceEpoch)
-                                                      .difference(DateTime
-                                                          .fromMillisecondsSinceEpoch(
-                                                              (profileViewModel
+                                                      .difference(DateTime.fromMillisecondsSinceEpoch(
+                                                          profileViewModel
                                                                       .pregnancyDetails
-                                                                      ?.startingDay)! *
-                                                                  (24 *
-                                                                      60 *
-                                                                      60 *
-                                                                      1000)))
+                                                                      ?.startingDay ==
+                                                                  null
+                                                              ? 0
+                                                              : (profileViewModel
+                                                                  .pregnancyDetails
+                                                                  ?.startingDay)!))
                                                       .inDays)) ~/
                                               7)
                                           .toString(),
@@ -332,6 +333,7 @@ class _ProfileViewState extends State<ProfileView> {
 
 class SavedVideoCard extends StatelessWidget {
   final String image;
+
   const SavedVideoCard({Key? key, required this.image}) : super(key: key);
 
   @override

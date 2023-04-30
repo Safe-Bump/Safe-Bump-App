@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/injection.dart';
@@ -34,8 +35,11 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Safe Bump',
-          initialRoute: NavigationRoutes.mainScreen,
-          // initialRoute: isViewed==null ? '/onboarding' : '/',
+          initialRoute: isViewed == null
+              ? NavigationRoutes.onboarding
+              : (firebaseAuth.currentUser == null
+                  ? NavigationRoutes.login
+                  : NavigationRoutes.mainScreen),
           onGenerateRoute: RouteGenerator.generateRoute,
           theme: ThemeData(
               primarySwatch: Colors.pink,

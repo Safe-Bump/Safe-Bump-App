@@ -50,13 +50,21 @@ class AssetsHelper {
   static const String timelineIndicator = 'assets/svg/timeline/timeline.svg';
   static const String seedSvg = 'assets/svg/suggested_food/seeds.svg';
 
+  static const String baby_weight =
+      'assets/images/pregnancy detail/pediatrics.png';
+
+  static const String baby_height =
+      'assets/images/pregnancy detail/height.png';
+
+  static const String baby_calendar =
+      'assets/images/pregnancy detail/calendar.png';
   static const String place_api_base_url =
       'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
   static const String place_photo_api_base_url =
       'https://maps.googleapis.com/maps/api/place/photo?';
   static const String risk_detector_api_base_url =
       'https://safe-bump-backend.onrender.com/api/predict_health?';
-
+  static const String place_api_key = "AIzaSyBtygbeWna36e0chLf0XRZjXINgjen8zAw";
   static const List<Map<String, dynamic>> articleData = [
     {
       'title': 'Maintaining a Healthy Pregnancy',

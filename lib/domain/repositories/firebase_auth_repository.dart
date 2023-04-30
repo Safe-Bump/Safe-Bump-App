@@ -1,15 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:safe_bump/domain/entities/user_model.dart';
 
 import '../../data/repositories/login_repository.dart';
 
 class FirebaseAuthRepository implements LoginRepository {
+  final FirebaseFirestore _firestore;
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
-  FirebaseAuthRepository(this._firebaseAuth, this._googleSignIn);
+  FirebaseAuthRepository(
+      this._firebaseAuth, this._googleSignIn, this._firestore);
 
   @override
   Future<UserCredential?> login(String? email, String? password) async {
@@ -38,8 +42,11 @@ class FirebaseAuthRepository implements LoginRepository {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      return await _firebaseAuth.signInWithCredential(credential);
+      var userCredential = await _firebaseAuth.signInWithCredential(credential);
+      _firestore.collection("User").doc(userCredential.user?.uid).set(UserModel(
+              userCredential.user?.displayName, userCredential.user?.email, "")
+          .toJson());
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         if (kDebugMode) {
