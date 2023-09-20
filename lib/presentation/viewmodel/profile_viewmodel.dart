@@ -28,5 +28,6 @@ class ProfileViewModel extends ChangeNotifier {
   Future<Void?> getPregnancyDetails() async {
     _pregnancyDetails = await _profileUseCase.getPregnancyDetails();
     notifyListeners();
+    return null;
   }
 }

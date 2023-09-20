@@ -26,13 +26,16 @@ class GoogleAuthButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(image: AssetImage('assets/images/google_icon.png')),
+            const Image(
+              image: AssetImage('assets/images/google_icon.png'),
+              height: 16,
+            ),
             const SizedBox(
               width: 10,
             ),
             Text(
               label,
-              style: const TextStyle(fontSize: 18.0, color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
           ],
         ),

@@ -10,7 +10,7 @@ class PregnancyDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      child: PregnancyDetailView(),
+      child: const PregnancyDetailView(),
       create: (_) => GetIt.I<PregnancyDetailViewModel>(),
     );
   }

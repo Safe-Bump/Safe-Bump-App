@@ -1,7 +1,8 @@
-import 'dart:async';
-import 'dart:ffi';
+// ignore_for_file: unused_field
 
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -20,10 +21,10 @@ class HospitalView extends StatefulWidget {
 }
 
 class _HospitalViewState extends State<HospitalView> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   Position? _currentPosition;
-  LatLng _center = LatLng(45.521563, -122.677433);
-  Set<Marker> _markers = {};
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+  final Set<Marker> _markers = {};
 
   Position? get currentPosition => _currentPosition;
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -55,7 +56,7 @@ class _HospitalViewState extends State<HospitalView> {
     return Consumer<HospitalViewModel>(
       builder: (context, hospitalViewModel, child) => Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: SafeBumpAppBar(
+        appBar: const SafeBumpAppBar(
             // leadingWidget: Icon(Icons.menu_rounded),
             trailingWidget: Icon(Icons.more_vert),
             title: "Hospitals"),
@@ -72,11 +73,11 @@ class _HospitalViewState extends State<HospitalView> {
           mapToolbarEnabled: false,
         ),
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.search),
+            child: const Icon(Icons.search),
             onPressed: () {
               showModalBottomSheet(
                   context: context,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10))),
@@ -97,13 +98,13 @@ class _HospitalViewState extends State<HospitalView> {
                                       var value =
                                           hospitalViewModel.currentPosition;
                                       if (value != null) {
-                                        var cameraPosition = new CameraPosition(
+                                        var cameraPosition = CameraPosition(
                                             target: LatLng(value.latitude,
                                                 value.longitude),
                                             zoom: 14);
 
                                         _markers.add(Marker(
-                                            markerId: MarkerId('Home'),
+                                            markerId: const MarkerId('Home'),
                                             position: LatLng(value.latitude,
                                                 value.longitude)));
                                         final GoogleMapController controller =
@@ -115,7 +116,7 @@ class _HospitalViewState extends State<HospitalView> {
                                         setState(() {});
                                       }
                                     },
-                                    icon: Icon(Icons.location_searching))
+                                    icon: const Icon(Icons.location_searching))
                               ],
                             ),
                             SizedBox(
@@ -134,9 +135,11 @@ class _HospitalViewState extends State<HospitalView> {
                                       : hospitalViewModel
                                           .hospital?.results.length,
                                   itemBuilder: (context, index) {
-                                    print(hospitalViewModel
+                                    if (kDebugMode) {
+                                      print(hospitalViewModel
                                         .hospital?.results[index]
                                         .toJson());
+                                    }
                                     return Card(
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
@@ -152,7 +155,7 @@ class _HospitalViewState extends State<HospitalView> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   width: 50.w,
                                                   child: Text(
                                                     (hospitalViewModel
@@ -167,7 +170,7 @@ class _HospitalViewState extends State<HospitalView> {
                                                         TextOverflow.ellipsis,
                                                   ),
                                                 ),
-                                                Container(
+                                                SizedBox(
                                                   width: 50.w,
                                                   child: Text(
                                                     (hospitalViewModel
@@ -189,7 +192,7 @@ class _HospitalViewState extends State<HospitalView> {
                                                 Uri.parse(
                                                     "https://maps.google.com/?q=${hospitalViewModel.hospital?.results[index].vicinity}"),
                                               ),
-                                              icon: Icon(
+                                              icon: const Icon(
                                                   Icons.location_on_outlined),
                                               color: Colors.pinkAccent,
                                             ),

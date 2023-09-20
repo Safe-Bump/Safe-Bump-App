@@ -6,6 +6,6 @@ class ArticleListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ArticleListView();
+    return const ArticleListView();
   }
 }

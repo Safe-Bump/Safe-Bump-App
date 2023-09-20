@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
@@ -10,8 +9,6 @@ import 'package:safe_bump/data/repositories/dashboard_repository.dart';
 import 'package:safe_bump/data/repositories/hospital_repository.dart';
 import 'package:safe_bump/data/repositories/pregnancy_detail_repository.dart';
 import 'package:safe_bump/data/repositories/profile_repository.dart';
-import 'package:safe_bump/domain/entities/user_model.dart';
-import 'package:safe_bump/domain/entities/user_model.dart';
 import 'package:safe_bump/domain/repositories/calendar_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/dashboard_repository_impl.dart';
 import 'package:safe_bump/domain/repositories/hospital_repository_impl.dart';
@@ -52,9 +49,10 @@ void configureLoginModuleInjection() {
 
   locator.registerLazySingleton<LoginRepository>(
       () => FirebaseAuthRepository(firebaseAuth, googleSignIn, firestore));
-  if (!locator.isRegistered<LoginUseCase>())
+  if (!locator.isRegistered<LoginUseCase>()) {
     locator.registerLazySingleton<LoginUseCase>(
         () => LoginUseCase(locator<LoginRepository>()));
+  }
   if (!locator.isRegistered<AuthViewModel>()) {
     locator.registerFactory(() => AuthViewModel(locator<LoginUseCase>()));
   }
@@ -67,9 +65,10 @@ void configureDashboardModuleInjection() {
 
   locator.registerLazySingleton<DashboardRepository>(
       () => DashboardRepositoryImpl(firebaseAuth, firestore));
-  if (!locator.isRegistered<DashboardUseCase>())
+  if (!locator.isRegistered<DashboardUseCase>()) {
     locator.registerLazySingleton<DashboardUseCase>(
         () => DashboardUseCase(locator<DashboardRepository>()));
+  }
   if (!locator.isRegistered<DashboardViewModel>()) {
     locator.registerFactory<DashboardViewModel>(
         () => DashboardViewModel(locator<DashboardUseCase>()));
@@ -78,15 +77,17 @@ void configureDashboardModuleInjection() {
 
 @module
 void configureCalendarModuleInjection() {
+  // ignore: unused_local_variable
   final firebaseAuth = locator<FirebaseAuth>();
   final firestore = locator<FirebaseFirestore>();
 
   locator.registerLazySingleton<CalendarRepository>(
       () => CalendarRepositoryImpl(firestore));
 
-  if (!locator.isRegistered<CalendarUseCase>())
+  if (!locator.isRegistered<CalendarUseCase>()) {
     locator.registerLazySingleton<CalendarUseCase>(
         () => CalendarUseCase(locator<CalendarRepository>()));
+  }
 
   if (!locator.isRegistered<CalendarViewModel>()) {
     locator.registerFactory<CalendarViewModel>(
@@ -102,9 +103,10 @@ void configurePregnancyDetailModuleInjection() {
   locator.registerLazySingleton<PregnancyDetailRepository>(
       () => PregnancyDetailRepositoryImpl(firebaseAuth, firestore));
 
-  if (!locator.isRegistered<PregnancyDetailUseCase>())
+  if (!locator.isRegistered<PregnancyDetailUseCase>()) {
     locator.registerLazySingleton<PregnancyDetailUseCase>(
         () => PregnancyDetailUseCase(locator<PregnancyDetailRepository>()));
+  }
 
   if (!locator.isRegistered<PregnancyDetailViewModel>()) {
     locator.registerFactory<PregnancyDetailViewModel>(
@@ -120,9 +122,10 @@ void configureProfileModuleInjection() {
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(firestore, firebaseAuth));
 
-  if (!locator.isRegistered<ProfileUseCase>())
+  if (!locator.isRegistered<ProfileUseCase>()) {
     locator.registerLazySingleton<ProfileUseCase>(
         () => ProfileUseCase(locator<ProfileRepository>()));
+  }
 
   if (!locator.isRegistered<ProfileViewModel>()) {
     locator.registerFactory<ProfileViewModel>(
@@ -138,9 +141,10 @@ void configureTimelineModuleInjection() {
   locator.registerLazySingleton<TimelineRepository>(
       () => TimelineRepositoryImpl(firestore, firebaseAuth));
 
-  if (!locator.isRegistered<TimelineUseCase>())
+  if (!locator.isRegistered<TimelineUseCase>()) {
     locator.registerLazySingleton<TimelineUseCase>(
         () => TimelineUseCase(locator<TimelineRepository>()));
+  }
 
   if (!locator.isRegistered<TimelineViewModel>()) {
     locator.registerFactory<TimelineViewModel>(
@@ -154,9 +158,10 @@ void configureHospitalModuleInjection() {
   locator.registerLazySingleton<HospitalRepository>(
       () => HospitalRepositoryImpl(dio));
 
-  if (!locator.isRegistered<HospitalUseCase>())
+  if (!locator.isRegistered<HospitalUseCase>()) {
     locator.registerLazySingleton<HospitalUseCase>(
         () => HospitalUseCase(locator<HospitalRepository>()));
+  }
 
   if (!locator.isRegistered<HospitalViewModel>()) {
     locator.registerFactory<HospitalViewModel>(
@@ -170,9 +175,10 @@ void configureRiskDetectorModuleInjection() {
   locator.registerLazySingleton<RiskDetectorRepository>(
       () => RiskDetectorRepositoryImpl(dio));
 
-  if (!locator.isRegistered<RiskDetectorUseCase>())
+  if (!locator.isRegistered<RiskDetectorUseCase>()) {
     locator.registerLazySingleton<RiskDetectorUseCase>(
         () => RiskDetectorUseCase(locator<RiskDetectorRepository>()));
+  }
 
   if (!locator.isRegistered<RiskDetectorViewModel>()) {
     locator.registerFactory<RiskDetectorViewModel>(

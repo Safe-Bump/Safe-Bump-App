@@ -26,5 +26,6 @@ class RiskDetectorViewModel extends ChangeNotifier {
     _riskData = await _riskDetectorUseCase.fetchRiskData(
         age, systolicBP, diastolicBP, bs, bodyTemp, heartRate);
     notifyListeners();
+    return null;
   }
 }

@@ -189,5 +189,6 @@ class TimelineViewModel extends ChangeNotifier {
   Future<Void?> getPregnancyDetails() async {
     _pregnancyDetails = await _timelineUseCase.getPregnancyDetails();
     notifyListeners();
+    return null;
   }
 }

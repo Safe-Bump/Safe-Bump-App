@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/screen/article_screen.dart';
 import 'package:sizer/sizer.dart';
@@ -13,12 +12,12 @@ class ArticleListView extends StatefulWidget {
 }
 
 class _ArticleListViewState extends State<ArticleListView> {
-  List<Map<String, dynamic>> _articleData = AssetsHelper.articleData;
+  final List<Map<String, dynamic>> _articleData = AssetsHelper.articleData;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SafeBumpAppBar(
+      appBar: const SafeBumpAppBar(
         // leadingWidget: Icon(Icons.menu_rounded),
         trailingWidget: Icon(Icons.more_vert),
         title: "Article",
@@ -120,7 +119,7 @@ class ArticleListCard extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.bookmark_border_rounded),
+                    icon: const Icon(Icons.bookmark_border_rounded),
                   )
                 ],
               )

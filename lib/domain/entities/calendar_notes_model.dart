@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'calendar_notes_model.g.dart';
@@ -8,7 +7,7 @@ part 'calendar_notes_model.g.dart';
 class CalendarNotesModel extends Equatable {
   final Map<String, List<String>> notes;
 
-  CalendarNotesModel(this.notes);
+  const CalendarNotesModel(this.notes);
 
   factory CalendarNotesModel.fromJson(Map<String, dynamic> json) =>
       _$CalendarNotesModelFromJson(json);
@@ -16,5 +15,5 @@ class CalendarNotesModel extends Equatable {
   Map<String, dynamic> toJson() => _$CalendarNotesModelToJson(this);
 
   @override
-  List<Object?> get props => [this.notes];
+  List<Object?> get props => [notes];
 }

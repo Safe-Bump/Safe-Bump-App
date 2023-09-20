@@ -15,6 +15,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (_) => GetIt.I<ProfileViewModel>(), child: ProfileView());
+        create: (_) => GetIt.I<ProfileViewModel>(), child: const ProfileView());
   }
 }

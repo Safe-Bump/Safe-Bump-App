@@ -9,7 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../domain/entities/onboarding_entities.dart';
-import 'OnboardingStack.dart';
+import 'onboardingStack.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class OnBoardingPage extends StatefulWidget {
 class _OnBoardingPageState extends State<OnBoardingPage> {
   int current = 0;
   int totalSlides = 4;
-  CarouselController _carouselController = CarouselController();
+  final CarouselController _carouselController = CarouselController();
 
   Future<void> animateScroll(int page) async {
     await _carouselController.animateToPage(
@@ -43,7 +43,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
             RichText(
@@ -51,10 +51,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 children: <TextSpan>[
                   TextSpan(
                       text:
-                          "${mainOnboardings[this.current].title.split(' ')[0]} ",
+                          "${mainOnboardings[current].title.split(' ')[0]} ",
                       style: Theme.of(context).textTheme.headlineLarge),
                   TextSpan(
-                      text: mainOnboardings[this.current].title.split(' ')[1],
+                      text: mainOnboardings[current].title.split(' ')[1],
                       style: Theme.of(context)
                           .textTheme
                           .headlineLarge
@@ -62,13 +62,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Container(
+            SizedBox(
               height: 50.h,
               child: CarouselSlider(
-                items: [
+                items: const [
                   OnboardingStack(index: 0),
                   OnboardingStack(index: 1),
                   OnboardingStack(index: 2),
@@ -87,27 +87,27 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     }),
               ),
             ),
-            this.current == 0
+            current == 0
                 ? Text("Welcome", style: Theme.of(context).textTheme.headlineMedium)
-                : SizedBox(
+                : const SizedBox(
                     height: 0,
                   ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Container(
+            SizedBox(
               width: 80.w,
               child: Text(
-                mainOnboardings[this.current].description,
+                mainOnboardings[current].description,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            this.current == 3
-                ? Container(
+            current == 3
+                ? SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: CustomButton(
                         label: "Get Started",
@@ -117,7 +117,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         },
                         color: Colors.pinkAccent),
                   )
-                : SizedBox(
+                : const SizedBox(
                     height: 0,
                   ),
             Expanded(
@@ -130,14 +130,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       onPressed: () {
                         animateScroll(3);
                       },
-                      child: Text("SKIP"),
+                      child: const Text("SKIP"),
                     ),
                     AnimatedSmoothIndicator(
                       activeIndex: current.ceil(),
                       count: 4,
                       onDotClicked: (index) => animateScroll(index),
                       duration: const Duration(milliseconds: 500),
-                      effect: WormEffect(
+                      effect: const WormEffect(
                         dotHeight: 8,
                         activeDotColor: Colors.pink,
                         spacing: 8,
@@ -149,7 +149,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       onPressed: () {
                         animateScroll(current + 1);
                       },
-                      child: Text("NEXT"),
+                      child: const Text("NEXT"),
                     ),
                   ],
                 ),

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:safe_bump/domain/entities/place_api/photo.dart';
 import 'package:safe_bump/domain/entities/place_api/plus_code.dart';

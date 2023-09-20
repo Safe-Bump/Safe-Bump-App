@@ -11,6 +11,6 @@ class HospitalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => GetIt.I<HospitalViewModel>(),
-        child: HospitalView());
+        child: const HospitalView());
   }
 }

@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType inputType;
   final ValueChanged<String>? onChanged;
   final Widget? suffixIcon;
+  final TextInputAction? textInputAction;
 
   const CustomTextField(
       {super.key,
@@ -15,7 +16,9 @@ class CustomTextField extends StatelessWidget {
       this.obscureText = false,
       this.inputType = TextInputType.text,
       this.onChanged,
-      this.suffixIcon});
+      this.suffixIcon, 
+      this.textInputAction=TextInputAction.next
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: inputType,
+      textInputAction: textInputAction,
       validator: (value) {
         if (value == null && value!.isEmpty) {
           return 'Please enter';

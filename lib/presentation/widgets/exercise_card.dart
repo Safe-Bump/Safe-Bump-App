@@ -6,8 +6,8 @@ class ExerciseCard extends StatelessWidget {
   final String description;
   final String image;
 
-  ExerciseCard(
-      {required this.title, required this.description, required this.image});
+  const ExerciseCard(
+      {super.key, required this.title, required this.description, required this.image});
 
   @override
   Widget build(BuildContext context) {

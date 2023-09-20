@@ -44,6 +44,7 @@ class CalendarViewModel extends ChangeNotifier {
         () => List.empty(growable: true));
     setLoading(false);
     notifyListeners();
+    return null;
   }
 
   void onSelectedDateChanged(DateTime selectedDate) {
@@ -60,11 +61,13 @@ class CalendarViewModel extends ChangeNotifier {
     _notesList?.add(text);
     await _calendarUseCase.addNotes(selectedDate, notesList);
     notifyListeners();
+    return null;
   }
 
   Future<Void?> deleteNotes(int index) async {
     _notesList?.removeAt(index);
     await _calendarUseCase.addNotes(selectedDate, notesList);
     notifyListeners();
+    return null;
   }
 }

@@ -24,10 +24,10 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<UserCredential?> login() async {
+  Future<UserCredential?> login(String? email, String? password, BuildContext context) async {
     setLoading(true);
 
-    final result = await _loginUseCase.login(user);
+    final result = await _loginUseCase.login(email, password, context);
 
     setLoading(false);
 
@@ -44,10 +44,10 @@ class AuthViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<UserCredential?> signUp() async {
+  Future<UserCredential?> signUp(UserModel users, BuildContext context) async {
     setLoading(true);
 
-    final result = await _loginUseCase.signUp(user);
+    final result = await _loginUseCase.signUp(users, context);
 
     setLoading(false);
 

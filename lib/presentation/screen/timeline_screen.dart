@@ -12,7 +12,7 @@ class TimelineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => GetIt.I<TimelineViewModel>(),
-      child: TimelineView(),
+      child: const TimelineView(),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,7 +9,7 @@ class PregnancyDetails extends Equatable {
   final double? babyHeight;
   final double? babyWeight;
 
-  PregnancyDetails(this.startingDay, this.babyHeight, this.babyWeight);
+  const PregnancyDetails(this.startingDay, this.babyHeight, this.babyWeight);
 
   factory PregnancyDetails.fromJson(Map<String, dynamic> json) =>
       _$PregnancyDetailsFromJson(json);
@@ -19,5 +18,5 @@ class PregnancyDetails extends Equatable {
 
   @override
   List<Object?> get props =>
-      [this.startingDay, this.babyHeight, this.babyWeight];
+      [startingDay, babyHeight, babyWeight];
 }

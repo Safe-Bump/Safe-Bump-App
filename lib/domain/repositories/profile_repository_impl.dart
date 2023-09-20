@@ -17,8 +17,13 @@ class ProfileRepositoryImpl extends ProfileRepository {
           .collection("Pregnancy Detail")
           .doc(_firebaseAuth.currentUser?.uid)
           .get();
-      return PregnancyDetails.fromJson(pregnancyDetails.data()!);
-    } on Exception catch (e) {
+      // Check if pregnancyDetails.data() is not null before accessing it.
+      if (pregnancyDetails.data() != null) {
+        return PregnancyDetails.fromJson(pregnancyDetails.data()!);
+      } else {
+        return null; // Handle the case when data is null.
+      }
+    } on Exception {
       return null;
     }
   }

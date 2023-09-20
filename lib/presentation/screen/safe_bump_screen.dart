@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/screen/calendar_screen.dart';
 import 'package:safe_bump/presentation/screen/dashboard_screen.dart';
@@ -18,58 +17,59 @@ class _SafeBumpScreenState extends State<SafeBumpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          elevation: 0,
-          onTap: (index) {
-            setState(() {
-              pageIndex = index;
-            });
-          },
-          landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: pageIndex,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          iconSize: 25,
-          selectedIconTheme:
-              Theme.of(context).iconTheme.copyWith(color: Colors.pinkAccent),
-          unselectedIconTheme:
-              Theme.of(context).iconTheme.copyWith(color: Colors.black),
-          items: [
-            BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Icon(Icons.dashboard_outlined),
-                ),
-                label: "dashboard"),
-            BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Icon(Icons.calendar_today_outlined),
-                ),
-                label: "calendar"),
-            BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Icon(Icons.view_timeline_outlined),
-                ),
-                label: "timeline"),
-            BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Icon(Icons.person_outline_rounded),
-                ),
-                label: "person"),
-          ]),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(highlightColor: Colors.transparent),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(                                           
+            topLeft: Radius.circular(15),                                            
+            topRight: Radius.circular(15),                                           
+          ),
+          child: BottomNavigationBar(
+              elevation: 0,
+              onTap: (index) {
+                setState(() {
+                  pageIndex = index;
+                });
+              },
+              landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+              backgroundColor: Colors.white,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: pageIndex,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              iconSize: 25,
+              selectedIconTheme:
+                  Theme.of(context).iconTheme.copyWith(color: Colors.pinkAccent),
+              unselectedIconTheme:
+                  Theme.of(context).iconTheme.copyWith(color: Colors.black),
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.dashboard_outlined),
+                    tooltip: 'Dashboard',
+                    label: "dashboard"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.calendar_today_outlined),
+                    tooltip: 'Calendar',
+                    label: "calendar"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.view_timeline_outlined),
+                    tooltip: 'Timeline',
+                    label: "timeline"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outline_rounded),
+                    tooltip: 'Profile',
+                    label: "person"),
+              ]),
+        ),
+      ),
       body: IndexedStack(
-        children: [
-          const DashboardScreen(),
-          const CalendarScreen(),
-          const TimelineScreen(),
-          const ProfileScreen()
-        ],
         index: pageIndex,
+        children: const [
+          DashboardScreen(),
+          CalendarScreen(),
+          TimelineScreen(),
+          ProfileScreen()
+        ],
       ),
     );
   }
