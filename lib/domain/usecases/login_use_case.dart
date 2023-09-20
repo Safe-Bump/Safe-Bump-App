@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/domain/entities/user_model.dart';
 
@@ -10,8 +11,8 @@ class LoginUseCase {
 
   LoginUseCase(this._loginRepository);
 
-  Future<UserCredential?> login(UserModel? user) async {
-    final userCredential = await _loginRepository.login(user?.email,user?.password);
+  Future<UserCredential?> login(String? email, String? password, BuildContext context) async {
+    final userCredential = await _loginRepository.login(email, password, context);
     return userCredential;
   }
 
@@ -20,8 +21,8 @@ class LoginUseCase {
     return userCredential;
   }
 
-  Future<UserCredential?> signUp(UserModel? user) async {
-    final userCredential = await _loginRepository.login(user?.email,user?.password);
+  Future<UserCredential?> signUp(UserModel? user, BuildContext context) async {
+    final userCredential = await _loginRepository.signUp(user, context);
     return userCredential;
   }
 }

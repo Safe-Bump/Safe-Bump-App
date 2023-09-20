@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:safe_bump/utils/asset_helper.dart';
 
 import '../../data/repositories/risk_detector_repository.dart';
@@ -16,7 +17,9 @@ class RiskDetectorRepositoryImpl extends RiskDetectorRepository {
           "${AssetsHelper.risk_detector_api_base_url}age=$age&systolic_bp=$systolicBP&diastolic_bp=$diastolicBP&bs=$bs&body_temp=$bodyTemp&heart_rate=$heartRate");
       return (risk.data as Map<String, dynamic>)["result"];
     } on Exception catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return e.toString();
     }
   }

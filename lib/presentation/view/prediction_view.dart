@@ -1,5 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_bump/presentation/viewmodel/risk_detector_viewmodel.dart';
 import 'package:safe_bump/presentation/widgets/custom_button.dart';
@@ -26,7 +27,7 @@ class _PredictionViewState extends State<PredictionView> {
     labelStyle: TextStyle(fontSize: 10.sp, color: Colors.black),
     errorStyle: TextStyle(fontSize: 10.sp),
     hintText: "Enter your email",
-    hintStyle: TextStyle(fontSize: 10.sp, color: Color(0xFFAF9E9E)),
+    hintStyle: TextStyle(fontSize: 10.sp, color: const Color(0xFFAF9E9E)),
     contentPadding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 2.5.h),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.all(
@@ -47,7 +48,7 @@ class _PredictionViewState extends State<PredictionView> {
   Widget build(BuildContext context) {
     return Consumer<RiskDetectorViewModel>(
       builder: (context, riskDetectorViewModel, _) => Scaffold(
-        appBar: SafeBumpAppBar(
+        appBar: const SafeBumpAppBar(
           title: 'Health Prediction',
         ),
         body: Padding(
@@ -190,9 +191,7 @@ class _PredictionViewState extends State<PredictionView> {
                             color: Colors.pinkAccent),
                         SizedBox(height: 10.h,),
                         Text(
-                          (riskDetectorViewModel.riskData == null
-                                  ? ""
-                                  : riskDetectorViewModel.riskData)
+                          (riskDetectorViewModel.riskData ?? "")
                               .toString(),
                           style: Theme.of(context).textTheme.headlineLarge,
                         )

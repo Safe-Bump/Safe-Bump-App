@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,6 +21,7 @@ class HospitalRepositoryImpl extends HospitalRepository {
       // var photoResponse = await _dio.get(
       //     "${AssetsHelper.place_photo_api_base_url}maxwidth=400&photo_reference=photo_reference");
       return hospitalData;
+    // ignore: unused_catch_clause
     } on Exception catch (e) {
       return null;
     }

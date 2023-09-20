@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:injectable/injectable.dart';
 import 'package:safe_bump/data/repositories/dashboard_repository.dart';
 import 'package:safe_bump/domain/entities/pregnancy_details.dart';
 
@@ -19,9 +18,12 @@ class DashboardRepositoryImpl extends DashboardRepository {
           .collection("User")
           .doc(_firebaseAuth.currentUser?.uid)
           .get();
-
-      return UserModel.fromJson(user.data()!);
-    } on Exception catch (e) {
+      if (user.data() != null) {
+        return UserModel.fromJson(user.data()!);
+      } else {
+        return null; // Handle the case when data is null.
+      }
+    } on Exception {
       return null;
     }
   }
@@ -33,11 +35,12 @@ class DashboardRepositoryImpl extends DashboardRepository {
           .collection("Pregnancy Detail")
           .doc(_firebaseAuth.currentUser?.uid)
           .get();
-      if (pregnancyDetails.data() != null)
+      if (pregnancyDetails.data() != null) {
         return PregnancyDetails.fromJson(pregnancyDetails.data()!);
-      else
+      } else {
         return null;
-    } on Exception catch (e) {
+      }
+    } on Exception {
       return null;
     }
   }

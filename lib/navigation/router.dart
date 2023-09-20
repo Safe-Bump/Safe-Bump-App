@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:safe_bump/presentation/screen/pregnancy_detail_screen.dart';
 import 'package:safe_bump/presentation/screen/video_list_screen.dart';
@@ -48,23 +50,23 @@ class RouteGenerator {
       case NavigationRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case NavigationRoutes.predictor:
-        return MaterialPageRoute(builder: (_) => PredictionScreen());
+        return MaterialPageRoute(builder: (_) => const PredictionScreen());
       case NavigationRoutes.onboarding:
-        return MaterialPageRoute(builder: (_) => OnBoardingPage());
+        return MaterialPageRoute(builder: (_) => const OnBoardingPage());
       case NavigationRoutes.signup:
-        return MaterialPageRoute(builder: (_) => SignUpScreen());
+        return MaterialPageRoute(builder: (_) => const SignUpScreen());
       case NavigationRoutes.dashboard:
-        return MaterialPageRoute(builder: (_) => DashboardScreen());
+        return MaterialPageRoute(builder: (_) => const DashboardScreen());
       case NavigationRoutes.exercise:
-        return MaterialPageRoute(builder: (_) => ExerciseScreen());
+        return MaterialPageRoute(builder: (_) => const ExerciseScreen());
       case NavigationRoutes.video_list:
-        return MaterialPageRoute(builder: (_) => VideoListScreen());
+        return MaterialPageRoute(builder: (_) => const VideoListScreen());
       case NavigationRoutes.food:
-        return MaterialPageRoute(builder: (_) => SuggestedFoodScreen());
+        return MaterialPageRoute(builder: (_) => const SuggestedFoodScreen());
       case NavigationRoutes.pregnancy_detail:
-        return MaterialPageRoute(builder: (_) => PregnancyDetailScreen());
+        return MaterialPageRoute(builder: (_) => const PregnancyDetailScreen());
       case NavigationRoutes.exercise_detail:
-        return MaterialPageRoute(builder: (_) => ExerciseDetailPage(title: "title", description: "description", image: "image"));
+        return MaterialPageRoute(builder: (_) => const ExerciseDetailPage(title: "title", description: "description", image: "image"));
       default:
         return MaterialPageRoute(builder: (_) => const NotFoundScreen());
     }

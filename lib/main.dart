@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/injection.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: RouteGenerator.generateRoute,
           theme: ThemeData(
               primarySwatch: Colors.pink,
-              scaffoldBackgroundColor: Colors.grey.shade50,
+              scaffoldBackgroundColor: const Color(0xFFf5f6fb),
               textTheme: TextTheme(
                 headlineLarge: TextStyle(
                     fontFamily: 'ProductSans',

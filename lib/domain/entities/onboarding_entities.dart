@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 import '../../utils/asset_helper.dart';
 
@@ -13,7 +12,6 @@ class OnboardingEntity  {
     required this.description,
   });
 
-  @override
   List<Object?> get props => [image, title, description];
 }
 

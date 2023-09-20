@@ -16,7 +16,7 @@ dependencies:
   provider: ^6.0.5
   get_it: ^7.2.0
   firebase_core: ^2.7.0
-  firebase_auth: ^4.2.9
+  firebase_auth: ^4.10.0
   injectable: ^2.1.0
   google_sign_in: ^6.0.2
   google_fonts: ^4.0.3
@@ -38,13 +38,15 @@ dependencies:
   video_player: ^2.6.1
   home_widget: ^0.2.0+1
 
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   injectable_generator: ^2.1.0
   build_runner: ^2.3.3
   json_serializable: ^6.6.1
-
+  flutter_lints: ^2.0.0
 
 flutter:
 

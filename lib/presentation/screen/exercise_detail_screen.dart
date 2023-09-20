@@ -6,13 +6,14 @@ class ExerciseDetailPage extends StatefulWidget {
   final String description;
   final String image;
 
-  const ExerciseDetailPage({
+  const ExerciseDetailPage({super.key, 
     required this.title,
     required this.description,
     required this.image,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _ExerciseDetailPageState createState() => _ExerciseDetailPageState();
 }
 

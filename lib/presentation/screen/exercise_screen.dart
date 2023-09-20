@@ -4,14 +4,17 @@ import 'package:safe_bump/utils/asset_helper.dart';
 import '../widgets/exercise_card.dart';
 
 class ExerciseScreen extends StatefulWidget {
+  const ExerciseScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ExerciseScreenState createState() => _ExerciseScreenState();
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
   int _currentTrimester = 1;
 
-  List<Map<String, dynamic>> _firstTrimesterExercises = [
+  final List<Map<String, dynamic>> _firstTrimesterExercises = [
     {
       'title': 'Walking',
       'description':
@@ -50,7 +53,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     }
   ];
 
-  List<Map<String, dynamic>> _secondTrimesterExercises = [
+  final List<Map<String, dynamic>> _secondTrimesterExercises = [
     {
       'title': 'Prenatal Pilates',
       'description':
@@ -83,7 +86,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     }
   ];
 
-  List<Map<String, dynamic>> _thirdTrimesterExercises = [
+  final List<Map<String, dynamic>> _thirdTrimesterExercises = [
     {
       'title': 'Prenatal yoga',
       'description':
@@ -125,7 +128,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SafeBumpAppBar(
+      appBar: const SafeBumpAppBar(
         title: "Exercise",
         trailingWidget: null,
       ),
@@ -140,12 +143,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      child: const Text(
-                        "1st Trimester",
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
                       onPressed: () {
                         setState(() {
                           _currentTrimester = 1;
@@ -157,9 +154,15 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             _currentTrimester == 1 ? Colors.white : Colors.grey,
                         backgroundColor:
                             _currentTrimester == 1 ? Colors.pink : Colors.white,
-                        fixedSize: Size.fromHeight(45),
+                        fixedSize: const Size.fromHeight(45),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Text(
+                        "1st Trimester",
+                        style: TextStyle(
+                          fontSize: 13,
                         ),
                       ),
                     ),
@@ -167,12 +170,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton(
-                      child: const Text(
-                        "2nd Trimester",
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
                       onPressed: () {
                         setState(() {
                           _currentTrimester = 2;
@@ -184,9 +181,15 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             _currentTrimester == 2 ? Colors.white : Colors.grey,
                         backgroundColor:
                             _currentTrimester == 2 ? Colors.pink : Colors.white,
-                        fixedSize: Size.fromHeight(45),
+                        fixedSize: const Size.fromHeight(45),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Text(
+                        "2nd Trimester",
+                        style: TextStyle(
+                          fontSize: 13,
                         ),
                       ),
                     ),
@@ -194,12 +197,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton(
-                      child: const Text(
-                        "3rd Trimester",
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
                       onPressed: () {
                         setState(() {
                           _currentTrimester = 3;
@@ -211,9 +208,15 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             _currentTrimester == 3 ? Colors.white : Colors.grey,
                         backgroundColor:
                             _currentTrimester == 3 ? Colors.pink : Colors.white,
-                        fixedSize: Size.fromHeight(45),
+                        fixedSize: const Size.fromHeight(45),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Text(
+                        "3rd Trimester",
+                        style: TextStyle(
+                          fontSize: 13,
                         ),
                       ),
                     ),

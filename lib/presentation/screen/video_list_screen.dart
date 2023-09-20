@@ -6,6 +6,6 @@ class VideoListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VideoListView();
+    return const VideoListView();
   }
 }

@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,8 +13,8 @@ import 'package:safe_bump/utils/asset_helper.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../domain/entities/user_model.dart';
-import '../viewmodel/auth_viewmodel.dart';
+import '../screen/pregnancy_detail_screen.dart';
+
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -37,396 +37,492 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
     var selectedIndex = 0;
-    return Scaffold(
-      drawer: NavigationDrawer(
-        backgroundColor: Colors.grey.shade50,
-        selectedIndex: selectedIndex,
-        children: [
-          DrawerHeader(
-              child: CircleAvatar(
-            radius: 20,
-            backgroundImage: NetworkImage("https://picsum.photos/200"),
-          )),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Icon(Icons.dashboard_outlined),
-              title: Text("Dashboard"),
-              tileColor: Colors.white,
-              selectedTileColor: Colors.pinkAccent,
-              selectedColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Icon(Icons.calendar_today_outlined),
-              title: Text("Calendar"),
-              tileColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Icon(Icons.view_timeline_outlined),
-              title: Text("Timeline"),
-              tileColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Icon(Icons.person_outline_rounded),
-              title: Text("Profile"),
-              tileColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-            ),
-          )
-        ],
-      ),
-      appBar: SafeBumpAppBar(
-        trailingWidget: CircleAvatar(
-          radius: 20,
-          backgroundImage: NetworkImage(
-              user != null ? user.photoURL! : "https://picsum.photos/200"),
-        ),
-        title: "Home",
-      ),
-      body: Consumer<DashboardViewModel>(
-        builder: (context, dashboardViewModel, child) => LayoutBuilder(
-          builder: (context, constraints) => Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+          final user = FirebaseAuth.instance.currentUser;
+          return NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (OverscrollIndicatorNotification? notification){
+              notification!.disallowIndicator();
+              return true;
+            },
+            child: Scaffold(
+              drawer: NavigationDrawer(
+                backgroundColor: Colors.grey.shade50,
+                selectedIndex: selectedIndex,
                 children: [
-                  Text(
-                    "Hi " +
-                        (dashboardViewModel.user?.name != null
-                            ? (dashboardViewModel.user?.name)!
-                            : "User"),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.grey),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  if (dashboardViewModel.pregnancyDetails == null)
-                    Container(
-                      width: constraints.maxWidth,
-                      child: Card(
-                        color: Colors.pinkAccent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Add Pregnancy Details!!",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(color: Colors.white),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(context,
-                                        NavigationRoutes.pregnancy_detail);
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_circle_right,
-                                    color: Colors.white,
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  else
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((dashboardViewModel.pregnancyDetails?.startingDay) == null ? 1 : (dashboardViewModel.pregnancyDetails?.startingDay)!)).inDays) ~/ 7) + 1}nd Week of Pregnancy",
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        TableCalendar(
-                          focusedDay: date,
-                          firstDay:
-                              date.subtract(Duration(days: date.weekday - 1)),
-                          lastDay: date.add(Duration(
-                              days: DateTime.daysPerWeek - date.weekday)),
-                          calendarFormat: CalendarFormat.week,
-                          headerVisible: false,
-                          daysOfWeekVisible: false,
-                          rowHeight: 80,
-                          calendarBuilders: CalendarBuilders(
-                              defaultBuilder: (context, day, focusedDay) =>
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 3.0),
-                                    child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        height: 40.h,
-                                        width: 20.w,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(DateFormat('EEE').format(day),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall),
-                                            Text(
-                                              day.day.toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge,
-                                            ),
-                                          ],
-                                        ),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)))),
-                                  ),
-                              todayBuilder: (context, day, focusedDay) =>
-                                  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        height: 40.h,
-                                        width: 20.w,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              DateFormat('EEE').format(day),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.copyWith(
-                                                      color: Colors.white),
-                                            ),
-                                            Text(
-                                              day.day.toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(
-                                                      color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        decoration: BoxDecoration(
-                                            color: Colors.pinkAccent,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)))),
-                                  )),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(25),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.all(15),
-                                      width: 70,
-                                      height: 70,
-                                      child: SvgPicture.asset(
-                                          AssetsHelper.maternalImage),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.red.shade100,
-                                      )),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    "Baby is size of pear",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(color: Colors.grey),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Baby Height",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(color: Colors.grey),
-                                      ),
-                                      Text(
-                                          (dashboardViewModel
-                                                  .pregnancyDetails?.babyHeight)
-                                              .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge)
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Baby Weight",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(color: Colors.grey),
-                                      ),
-                                      Text(
-                                          (dashboardViewModel
-                                                  .pregnancyDetails?.babyWeight)
-                                              .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge)
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Baby Height",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(color: Colors.grey),
-                                      ),
-                                      Text("17 cm",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge)
-                                    ],
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                        ),
-                      ],
+                  const DrawerHeader(
+                      child: CircleAvatar(
+                    radius: 20,
+                    backgroundImage: NetworkImage("https://picsum.photos/200"),
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.dashboard_outlined),
+                      title: const Text("Dashboard"),
+                      tileColor: Colors.white,
+                      selectedTileColor: Colors.pinkAccent,
+                      selectedColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
                     ),
-                  SizedBox(
-                    height: constraints.maxHeight * .8,
-                    child: GridView(
-                      primary: false,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.calendar_today_outlined),
+                      title: const Text("Calendar"),
+                      tileColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.view_timeline_outlined),
+                      title: const Text("Timeline"),
+                      tileColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                  user == null?
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.person_outline_rounded),
+                      title: const Text("Login"),
+                      tileColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)
                       ),
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, NavigationRoutes.predictor);
-                          },
-                          child: DashboardCard(
-                            icon: Icons.medical_information,
-                            name: "Prediction",
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, NavigationRoutes.map);
-                          },
-                          child: DashboardCard(
-                            icon: Icons.local_hospital,
-                            name: "Hospitals",
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, NavigationRoutes.exercise);
-                          },
-                          child: DashboardCard(
-                            icon: Icons.fitness_center,
-                            name: "Exercises",
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, NavigationRoutes.articleList);
-                          },
-                          child: DashboardCard(
-                            icon: Icons.article,
-                            name: "Articles",
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, NavigationRoutes.video_list);
-                          },
-                          child: DashboardCard(
-                            icon: Icons.video_collection,
-                            name: "Videos",
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, NavigationRoutes.food);
-                          },
-                          child: DashboardCard(
-                            icon: Icons.food_bank,
-                            name: "Food",
-                          ),
-                        )
-                      ],
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context, NavigationRoutes.login
+                        );
+                      },
+                    ),
+                  ):
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.person_outline_rounded),
+                      title: const Text("Profile"),
+                      tileColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      
+                    ),
+                  ),
+                  user == null?
+                  const SizedBox.shrink():
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.person_outline_rounded),
+                      title: const Text("Logout"),
+                      tileColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut();
+                        
+                      },
                     ),
                   )
                 ],
               ),
+              appBar: SafeBumpAppBar(
+                trailingWidget: user != null ? 
+                StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                    .collection("User")
+                    .doc(user.uid)
+                    .snapshots(),
+                  builder: (context, snapshot){
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    var userData = snapshot.data!.data() as Map<String, dynamic>;
+                    return CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(userData['photoUrl']),
+                    );
+                  }
+                )
+                : const CircleAvatar(
+                  radius: 20,
+                  backgroundImage: NetworkImage("https://picsum.photos/200"),
+                ),
+                title: "Home",
+              ),
+              body: Consumer<DashboardViewModel>(
+                builder: (context, dashboardViewModel, child) => LayoutBuilder(
+                  builder: (context, constraints) => Padding(
+                    padding: EdgeInsets.fromLTRB(5.w, 0, 5.w, 0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          user == null?
+                          const SizedBox.shrink():
+                          Text(
+                            "Hi ${dashboardViewModel.user?.name}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          user == null ?
+                          ListTile(
+                            leading: const Icon(Icons.person_outline_rounded),
+                            title: const Text("Login"),
+                            tileColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context, NavigationRoutes.login
+                              );
+                            },
+                          ):
+                          dashboardViewModel.pregnancyDetails == null?
+                          SizedBox(
+                            width: constraints.maxWidth,
+                            height: 12.h,
+                            child: GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context, 
+                                  backgroundColor: Colors.white,
+                                  elevation: 0,
+                                  isScrollControlled: true,
+                                  shape:const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                                  ),
+                                  builder: (BuildContext context){
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                                      child: const PregnancyDetailScreen(),
+                                    );
+                                  }
+                                );
+                              },
+                              child: Card(
+                                color: Colors.pinkAccent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Add Pregnancy Details!!",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(color: Colors.white),
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_circle_right,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ):
+                          Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                              Text(
+                                "${((DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).difference(DateTime.fromMillisecondsSinceEpoch((dashboardViewModel.pregnancyDetails?.startingDay) == null ? 1 : (dashboardViewModel.pregnancyDetails?.startingDay)!)).inDays) ~/ 7) + 1} Week of Pregnancy",
+                                style: Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              TableCalendar(
+                                focusedDay: date,
+                                firstDay:
+                                    date.subtract(Duration(days: date.weekday - 1)),
+                                lastDay: date.add(Duration(
+                                    days: DateTime.daysPerWeek - date.weekday)),
+                                calendarFormat: CalendarFormat.week,
+                                headerVisible: false,
+                                daysOfWeekVisible: false,
+                                rowHeight: 80,
+                                calendarBuilders: CalendarBuilders(
+                                    defaultBuilder: (context, day, focusedDay) =>
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 3.0, horizontal: 1),
+                                          child: Container(
+                                              padding: const EdgeInsets.all(10),
+                                              height: 40.h,
+                                              width: 20.w,
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(10))),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(DateFormat('EEE').format(day),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall),
+                                                  Text(
+                                                    day.day.toString(),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge,
+                                                  ),
+                                                ],
+                                              )),
+                                        ),
+                                    todayBuilder: (context, day, focusedDay) =>
+                                        Padding(
+                                          padding: const EdgeInsets.all(3.0),
+                                          child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(vertical: 10),
+                                              height: 40.h,
+                                              width: 20.w,
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.pinkAccent,
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(10))),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    DateFormat('EEE').format(day),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.copyWith(
+                                                            color: Colors.white),
+                                                  ),
+                                                  Text(
+                                                    day.day.toString(),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(
+                                                            color: Colors.white),
+                                                  ),
+                                                ],
+                                              )),
+                                        )),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(25),
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                            padding: const EdgeInsets.all(15),
+                                            width: 70,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.red.shade100,
+                                            ),
+                                            child: SvgPicture.asset(
+                                                AssetsHelper.maternalImage)),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        Text(
+                                          "Baby is size of pear",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: Colors.grey),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 3.h,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Baby Height",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(color: Colors.grey),
+                                            ),
+                                            Text(
+                                                "${(dashboardViewModel
+                                                        .pregnancyDetails?.babyHeight)
+                                                    .toString()} ft",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge)
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Baby Weight",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(color: Colors.grey),
+                                            ),
+                                            Text(
+                                                "${(dashboardViewModel
+                                                        .pregnancyDetails?.babyWeight)
+                                                    .toString()} kg",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge)
+                                          ],
+                                        ),
+                                        // Column(
+                                        //   crossAxisAlignment:
+                                        //       CrossAxisAlignment.start,
+                                        //   children: [
+                                        //     Text(
+                                        //       "Baby Height",
+                                        //       style: Theme.of(context)
+                                        //           .textTheme
+                                        //           .bodyMedium
+                                        //           ?.copyWith(color: Colors.grey),
+                                        //     ),
+                                        //     Text("17 cm",
+                                        //         style: Theme.of(context)
+                                        //             .textTheme
+                                        //             .bodyLarge)
+                                        //   ],
+                                        // )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          GridView(
+                            primary: false,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                            ),
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, NavigationRoutes.predictor);
+                                },
+                                child: const DashboardCard(
+                                  icon: Icons.medical_information,
+                                  name: "Prediction",
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, NavigationRoutes.map);
+                                },
+                                child: const DashboardCard(
+                                  icon: Icons.local_hospital,
+                                  name: "Hospitals",
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, NavigationRoutes.exercise);
+                                },
+                                child: const DashboardCard(
+                                  icon: Icons.fitness_center,
+                                  name: "Exercises",
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, NavigationRoutes.articleList);
+                                },
+                                child: const DashboardCard(
+                                  icon: Icons.article,
+                                  name: "Articles",
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, NavigationRoutes.video_list);
+                                },
+                                child: const DashboardCard(
+                                  icon: Icons.video_collection,
+                                  name: "Videos",
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, NavigationRoutes.food);
+                                },
+                                child: const DashboardCard(
+                                  icon: Icons.food_bank,
+                                  name: "Food",
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+      }
     );
   }
 }

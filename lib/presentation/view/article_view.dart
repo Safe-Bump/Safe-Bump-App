@@ -19,7 +19,7 @@ class _ArticleViewState extends State<ArticleView> {
     var article = AssetsHelper.articleData[widget.index];
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: SafeBumpAppBar(
+      appBar: const SafeBumpAppBar(
         // leadingWidget: Icon(Icons.menu_rounded),
         trailingWidget: Icon(Icons.more_vert),
         title: "Article",
@@ -32,33 +32,31 @@ class _ArticleViewState extends State<ArticleView> {
               height: 30.h,
               fit: BoxFit.fill,
             ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            article["title"],
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.copyWith(color: Colors.pinkAccent),
-                          ),
-                          Icon(Icons.bookmark_border_rounded)
-                        ],
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text(article["detail"],
-                          style: Theme.of(context).textTheme.bodyMedium),
-                    ]),
-              ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          article["title"],
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(color: Colors.pinkAccent),
+                        ),
+                        const Icon(Icons.bookmark_border_rounded)
+                      ],
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Text(article["detail"],
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ]),
             )
           ],
         ),

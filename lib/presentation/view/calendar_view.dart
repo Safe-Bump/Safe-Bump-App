@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +30,7 @@ class _CalendarViewState extends State<CalendarView> {
     return Consumer<CalendarViewModel>(
       builder: (context, calendarViewModel, child) => calendarViewModel
               .isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Scaffold(
@@ -41,8 +40,8 @@ class _CalendarViewState extends State<CalendarView> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      leading: Icon(Icons.dashboard_outlined),
-                      title: Text("Dashboard"),
+                      leading: const Icon(Icons.dashboard_outlined),
+                      title: const Text("Dashboard"),
                       tileColor: Colors.white,
                       selectedTileColor: Colors.pinkAccent,
                       selectedColor: Colors.white,
@@ -53,8 +52,8 @@ class _CalendarViewState extends State<CalendarView> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      leading: Icon(Icons.calendar_today_outlined),
-                      title: Text("Calendar"),
+                      leading: const Icon(Icons.calendar_today_outlined),
+                      title: const Text("Calendar"),
                       tileColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
@@ -63,8 +62,8 @@ class _CalendarViewState extends State<CalendarView> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      leading: Icon(Icons.view_timeline_outlined),
-                      title: Text("Timeline"),
+                      leading: const Icon(Icons.view_timeline_outlined),
+                      title: const Text("Timeline"),
                       tileColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
@@ -73,8 +72,8 @@ class _CalendarViewState extends State<CalendarView> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                      leading: Icon(Icons.person_outline_rounded),
-                      title: Text("Profile"),
+                      leading: const Icon(Icons.person_outline_rounded),
+                      title: const Text("Profile"),
                       tileColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
@@ -86,13 +85,13 @@ class _CalendarViewState extends State<CalendarView> {
                 // leadingWidget: Icon(Icons.menu_rounded),
                 trailingWidget: IconButton(
                     onPressed: () {
-                      final TextEditingController _notesController =
+                      final TextEditingController notesController =
                           TextEditingController();
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              icon: Icon(Icons.note),
+                              icon: const Icon(Icons.note),
                               iconColor: Colors.pinkAccent,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -106,7 +105,7 @@ class _CalendarViewState extends State<CalendarView> {
                                       height: 1.h,
                                     ),
                                     CustomTextField(
-                                        controller: _notesController,
+                                        controller: notesController,
                                         hint: "Enter Notes"),
                                   ],
                                 ),
@@ -122,8 +121,8 @@ class _CalendarViewState extends State<CalendarView> {
                                   child: const Text('OK'),
                                   onPressed: () {
                                     calendarViewModel
-                                        .addNotes(_notesController.text);
-                                    _notesController.clear();
+                                        .addNotes(notesController.text);
+                                    notesController.clear();
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -131,7 +130,7 @@ class _CalendarViewState extends State<CalendarView> {
                             );
                           });
                     },
-                    icon: Icon(Icons.add)),
+                    icon: const Icon(Icons.add)),
                 title: "Calendar",
               ),
               body: LayoutBuilder(
@@ -156,23 +155,23 @@ class _CalendarViewState extends State<CalendarView> {
                                   as TextStyle,
                               leftChevronIcon: Container(
                                   decoration: BoxDecoration(
-                                      border: Border.fromBorderSide(BorderSide(
+                                      border: const Border.fromBorderSide(BorderSide(
                                           width: 3, color: Colors.grey)),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Icon(Icons.arrow_back)),
+                                  child: const Icon(Icons.arrow_back)),
                               rightChevronIcon: Container(
                                   decoration: BoxDecoration(
-                                      border: Border.fromBorderSide(
+                                      border: const Border.fromBorderSide(
                                           BorderSide(width: 3, color: Colors.grey)),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Icon(Icons.arrow_forward))),
+                                  child: const Icon(Icons.arrow_forward))),
                           focusedDay: calendarViewModel.focusedDate == null
-                              ? DateTime.now()
+                              ? calendarViewModel.selectedDate!
                               : calendarViewModel.focusedDate!,
                           firstDay: DateTime.utc(2010, 10, 16),
                           lastDay: DateTime.utc(2030, 3, 14),
                           currentDay: calendarViewModel.selectedDate,
-                          calendarStyle: CalendarStyle(
+                          calendarStyle: const CalendarStyle(
                               todayDecoration: BoxDecoration(
                                   color: Colors.pinkAccent,
                                   shape: BoxShape.circle)),
@@ -185,7 +184,11 @@ class _CalendarViewState extends State<CalendarView> {
                         ),
                         Container(
                           width: constraints.maxWidth,
-                          padding: EdgeInsets.all(25),
+                          padding: const EdgeInsets.all(25),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -209,7 +212,7 @@ class _CalendarViewState extends State<CalendarView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.circle,
                                             color: Colors.pinkAccent,
                                             size: 15,
@@ -226,7 +229,7 @@ class _CalendarViewState extends State<CalendarView> {
                                             calendarViewModel
                                                 .deleteNotes(index);
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.remove_circle_rounded,
                                             color: Colors.black,
                                             size: 15,
@@ -239,10 +242,6 @@ class _CalendarViewState extends State<CalendarView> {
                               )
                             ],
                           ),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
                         )
                       ],
                     ),

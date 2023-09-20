@@ -12,6 +12,7 @@ class PregnancyDetailViewModel extends ChangeNotifier {
 
   double? get babyHeight => _babyHeight;
 
+  // ignore: unused_field
   double? _babyWeight;
 
   double? get babyWeight => _babyHeight;
@@ -22,8 +23,12 @@ class PregnancyDetailViewModel extends ChangeNotifier {
 
   Future<Void?> addPregnancyDetail() async {
     await _pregnancyDetailUseCase.addPregnancyDetail(
-        startingDay!, babyHeight!, babyWeight!);
+      startingDay==null ? DateTime.now().millisecondsSinceEpoch : startingDay!, 
+      babyHeight!, 
+      babyWeight!
+    );
     notifyListeners();
+    return null;
   }
 
   void onBabyHeightChanged(double babyHeight) {

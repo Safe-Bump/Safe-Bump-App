@@ -31,10 +31,12 @@ class DashboardViewModel extends ChangeNotifier {
   Future<Void?> getUserDetail() async {
     _user = await _dashboardUseCase.getUserDetails();
     notifyListeners();
+    return null;
   }
 
   Future<Void?> getPregnancyDetails() async {
     _pregnancyDetails = await _dashboardUseCase.getPregnancyDetails();
     notifyListeners();
+    return null;
   }
 }

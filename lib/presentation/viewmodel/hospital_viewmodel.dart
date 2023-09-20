@@ -31,6 +31,7 @@ class HospitalViewModel extends ChangeNotifier {
   Future<Void?> getHospitalList() async {
     _hospital = await _hospitalUseCase.getHospitalList(currentPosition!);
     notifyListeners();
+    return null;
   }
 
   void onCurrentPositionChanged(LatLng? latLng) {
@@ -47,5 +48,6 @@ class HospitalViewModel extends ChangeNotifier {
     var position = await Geolocator.getCurrentPosition();
     onCurrentPositionChanged(LatLng(position.latitude, position.longitude));
     await getHospitalList();
+    return null;
   }
 }

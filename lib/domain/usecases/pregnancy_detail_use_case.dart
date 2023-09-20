@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:injectable/injectable.dart';
 import 'package:safe_bump/data/repositories/pregnancy_detail_repository.dart';

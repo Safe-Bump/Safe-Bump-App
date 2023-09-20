@@ -15,7 +15,7 @@ class CalendarRepositoryImpl extends CalendarRepository {
           .doc("DlmyxsohA5Uo4HhVEwHYC9DJ6sC2")
           .get();
       return CalendarNotesModel.fromJson(notes.data()!);
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -30,8 +30,8 @@ class CalendarRepositoryImpl extends CalendarRepository {
         'notes.${((selectedDate?.millisecondsSinceEpoch)! ~/ (24 * 60 * 60 * 1000)).toString()}':
             FieldValue.arrayUnion(notesList!)
       });
-    } on Exception catch (e) {
-      return null;
+    } on Exception {
+      return;
     }
   }
 
@@ -47,7 +47,7 @@ class CalendarRepositoryImpl extends CalendarRepository {
               .toString(): notesList
         }
       });
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }

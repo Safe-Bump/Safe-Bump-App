@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:safe_bump/presentation/view/profile_view.dart';
 import 'package:safe_bump/utils/asset_helper.dart';
 import 'package:sizer/sizer.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../navigation/router.dart';
 import '../widgets/safe_bump_app_bar.dart';
@@ -16,12 +13,12 @@ class VideoListView extends StatefulWidget {
 }
 
 class _VideoListViewState extends State<VideoListView> {
-  List<Map<String, dynamic>> _videoData = AssetsHelper.articleData;
+  final List<Map<String, dynamic>> _videoData = AssetsHelper.articleData;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SafeBumpAppBar(
+      appBar: const SafeBumpAppBar(
         // leadingWidget: Icon(Icons.menu_rounded),
         trailingWidget: Icon(Icons.more_vert),
         title: "Videos",
@@ -74,7 +71,7 @@ class VideoListCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 child: Stack(alignment: AlignmentDirectional.center, children: [
                   ClipRRect(
@@ -85,12 +82,12 @@ class VideoListCard extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Card(
+                  const Card(
+                    shape: CircleBorder(),
                     child: Icon(
                       Icons.play_arrow_rounded,
                       size: 50,
                     ),
-                    shape: CircleBorder(),
                   ),
                 ]),
               ),
@@ -119,7 +116,7 @@ class VideoListCard extends StatelessWidget {
                           ?.copyWith(color: Colors.pinkAccent)),
                   IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.bookmark_border_rounded))
+                      icon: const Icon(Icons.bookmark_border_rounded))
                 ],
               )
             ],

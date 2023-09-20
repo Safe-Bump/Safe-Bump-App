@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -27,66 +26,65 @@ class _TimelineViewState extends State<TimelineView> {
   Widget build(BuildContext context) {
     return Consumer<TimelineViewModel>(
       builder: (context, timelineViewModel, _) => Scaffold(
-        appBar: SafeBumpAppBar(
+        appBar: const SafeBumpAppBar(
           title: "Timeline",
-          trailingWidget: Icon(Icons.more_vert),
+          // trailingWidget: Icon(Icons.more_vert),
         ),
-        body: Container(
-          child: ListView.builder(
-            itemCount: timelineViewModel.weeks.length,
-            itemBuilder: (context, i) {
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 2.h),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 5.w,
-                      child: SvgPicture.asset(
-                        AssetsHelper.timelineIndicator,
-                        color: i ==
-                                ((DateTime.fromMillisecondsSinceEpoch(
-                                                DateTime.now()
-                                                    .millisecondsSinceEpoch)
-                                            .difference(DateTime
-                                                .fromMillisecondsSinceEpoch(timelineViewModel.pregnancyDetails?.startingDay == null ? 0 :
-                                                    (timelineViewModel
-                                                            .pregnancyDetails
-                                                            ?.startingDay)!))
-                                            .inDays) ~/
-                                        7)
-                            ? Colors.pink
-                            : Color(0xFFFFCDD2),
+        body: ListView.builder(
+          itemCount: timelineViewModel.weeks.length,
+          itemBuilder: (context, i) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 2.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 5.w,
+                    child: SvgPicture.asset(
+                      AssetsHelper.timelineIndicator,
+                      // ignore: deprecated_member_use
+                      color: i ==
+                              ((DateTime.fromMillisecondsSinceEpoch(
+                                              DateTime.now()
+                                                  .millisecondsSinceEpoch)
+                                          .difference(DateTime
+                                              .fromMillisecondsSinceEpoch(timelineViewModel.pregnancyDetails?.startingDay == null ? 0 :
+                                                  (timelineViewModel
+                                                          .pregnancyDetails
+                                                          ?.startingDay)!))
+                                          .inDays) ~/
+                                      7)
+                          ? Colors.pink
+                          : const Color(0xFFFFCDD2),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        timelineViewModel.weeks[i][0],
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          timelineViewModel.weeks[i][0],
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          width: 83.w,
-                          child: Text(
-                            timelineViewModel.weeks[i][1],
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
+                      SizedBox(
+                        width: 83.w,
+                        child: Text(
+                          timelineViewModel.weeks[i][1],
+                          style: const TextStyle(
+                            color: Colors.grey,
                           ),
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

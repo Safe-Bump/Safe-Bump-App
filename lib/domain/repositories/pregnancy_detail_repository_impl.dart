@@ -19,8 +19,9 @@ class PregnancyDetailRepositoryImpl extends PregnancyDetailRepository {
           .collection("Pregnancy Detail")
           .doc(_firebaseAuth.currentUser?.uid)
           .set(PregnancyDetails(startingDay, babyHeight, babyWeight).toJson());
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
+    return null;
   }
 }
